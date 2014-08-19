@@ -1,16 +1,13 @@
-//
 //  POSConfiguration.h
-//  
-//
 //  Created by Christophe Maximin on 19/08/2014.
-//
-//
 
-#ifndef _POSConfiguration_h
-#define _POSConfiguration_h
+@interface POSConfiguration : NSObject
 
-extern BOOL const kLive;
-extern NSString *const kServerBaseURL;
-extern NSString *const kServerSecureBaseURL;
++ (NSString *)environment;
++ (NSString *)serverBaseURL;
++ (NSString *)serverBaseURLViaSSL:(BOOL)viaSSL;
 
-#endif
++ (BOOL)production;
++ (BOOL)development;
+
+@end

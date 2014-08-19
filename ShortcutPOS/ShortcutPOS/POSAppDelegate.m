@@ -12,10 +12,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSString *whereToEditConfiguration = @"Edit POSConfiguration.m to change that";
+    NSString *whereToEditConfiguration = @"Edit POSConfiguration.m 'environment' to change that";
     
-    if (kLive){
-        NSLog(@"[LIVE MODE] -- %@", whereToEditConfiguration);
+    if ([POSConfiguration production]){
+        NSLog(@"[REMOTE PRODUCTION MODE] -- %@", whereToEditConfiguration);
     } else {
         NSLog(@"[LOCAL DEVELOPMENT MODE] -- %@", whereToEditConfiguration);
     }

@@ -34,7 +34,8 @@
     
     [self.contentWebView
         loadRequest:[NSURLRequest
-                     requestWithURL:[NSURL URLWithString:kServerBaseURL]]];
+                     requestWithURL:[NSURL
+                                     URLWithString:[POSConfiguration serverBaseURL]]]];
 
 }
 
