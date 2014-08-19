@@ -1,0 +1,508 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D9E3CBCC19A3C6B3007760A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E3CBCB19A3C6B3007760A1 /* Foundation.framework */; };
+		D9E3CBCE19A3C6B3007760A1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E3CBCD19A3C6B3007760A1 /* CoreGraphics.framework */; };
+		D9E3CBD019A3C6B3007760A1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E3CBCF19A3C6B3007760A1 /* UIKit.framework */; };
+		D9E3CBD619A3C6B3007760A1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9E3CBD419A3C6B3007760A1 /* InfoPlist.strings */; };
+		D9E3CBD819A3C6B3007760A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E3CBD719A3C6B3007760A1 /* main.m */; };
+		D9E3CBDC19A3C6B3007760A1 /* POSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E3CBDB19A3C6B3007760A1 /* POSAppDelegate.m */; };
+		D9E3CBDF19A3C6B3007760A1 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9E3CBDD19A3C6B3007760A1 /* Main_iPhone.storyboard */; };
+		D9E3CBE219A3C6B3007760A1 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9E3CBE019A3C6B3007760A1 /* Main_iPad.storyboard */; };
+		D9E3CBE719A3C6B3007760A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9E3CBE619A3C6B3007760A1 /* Images.xcassets */; };
+		D9E3CBEE19A3C6B3007760A1 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E3CBED19A3C6B3007760A1 /* XCTest.framework */; };
+		D9E3CBEF19A3C6B3007760A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E3CBCB19A3C6B3007760A1 /* Foundation.framework */; };
+		D9E3CBF019A3C6B3007760A1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E3CBCF19A3C6B3007760A1 /* UIKit.framework */; };
+		D9E3CBF819A3C6B3007760A1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9E3CBF619A3C6B3007760A1 /* InfoPlist.strings */; };
+		D9E3CBFA19A3C6B3007760A1 /* ShortcutPOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E3CBF919A3C6B3007760A1 /* ShortcutPOSTests.m */; };
+		D9E3CC0519A3C782007760A1 /* POSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E3CC0419A3C782007760A1 /* POSWebViewController.m */; };
+		D9E3CC0B19A3CB5D007760A1 /* POSConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E3CC0A19A3CB5D007760A1 /* POSConfiguration.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D9E3CBF119A3C6B3007760A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9E3CBC019A3C6B3007760A1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D9E3CBC719A3C6B3007760A1;
+			remoteInfo = ShortcutPOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D9E3CBC819A3C6B3007760A1 /* ShortcutPOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShortcutPOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9E3CBCB19A3C6B3007760A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D9E3CBCD19A3C6B3007760A1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D9E3CBCF19A3C6B3007760A1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D9E3CBD319A3C6B3007760A1 /* ShortcutPOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ShortcutPOS-Info.plist"; sourceTree = "<group>"; };
+		D9E3CBD519A3C6B3007760A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D9E3CBD719A3C6B3007760A1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D9E3CBD919A3C6B3007760A1 /* ShortcutPOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShortcutPOS-Prefix.pch"; sourceTree = "<group>"; };
+		D9E3CBDA19A3C6B3007760A1 /* POSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSAppDelegate.h; sourceTree = "<group>"; };
+		D9E3CBDB19A3C6B3007760A1 /* POSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POSAppDelegate.m; sourceTree = "<group>"; };
+		D9E3CBDE19A3C6B3007760A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		D9E3CBE119A3C6B3007760A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		D9E3CBE619A3C6B3007760A1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D9E3CBEC19A3C6B3007760A1 /* ShortcutPOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShortcutPOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9E3CBED19A3C6B3007760A1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		D9E3CBF519A3C6B3007760A1 /* ShortcutPOSTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ShortcutPOSTests-Info.plist"; sourceTree = "<group>"; };
+		D9E3CBF719A3C6B3007760A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D9E3CBF919A3C6B3007760A1 /* ShortcutPOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShortcutPOSTests.m; sourceTree = "<group>"; };
+		D9E3CC0319A3C782007760A1 /* POSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSWebViewController.h; sourceTree = "<group>"; };
+		D9E3CC0419A3C782007760A1 /* POSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSWebViewController.m; sourceTree = "<group>"; };
+		D9E3CC0919A3CAEF007760A1 /* POSConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSConfiguration.h; sourceTree = "<group>"; };
+		D9E3CC0A19A3CB5D007760A1 /* POSConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSConfiguration.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D9E3CBC519A3C6B3007760A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9E3CBCE19A3C6B3007760A1 /* CoreGraphics.framework in Frameworks */,
+				D9E3CBD019A3C6B3007760A1 /* UIKit.framework in Frameworks */,
+				D9E3CBCC19A3C6B3007760A1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9E3CBE919A3C6B3007760A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9E3CBEE19A3C6B3007760A1 /* XCTest.framework in Frameworks */,
+				D9E3CBF019A3C6B3007760A1 /* UIKit.framework in Frameworks */,
+				D9E3CBEF19A3C6B3007760A1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D9E3CBBF19A3C6B3007760A1 = {
+			isa = PBXGroup;
+			children = (
+				D9E3CBD119A3C6B3007760A1 /* ShortcutPOS */,
+				D9E3CBF319A3C6B3007760A1 /* ShortcutPOSTests */,
+				D9E3CBCA19A3C6B3007760A1 /* Frameworks */,
+				D9E3CBC919A3C6B3007760A1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D9E3CBC919A3C6B3007760A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9E3CBC819A3C6B3007760A1 /* ShortcutPOS.app */,
+				D9E3CBEC19A3C6B3007760A1 /* ShortcutPOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9E3CBCA19A3C6B3007760A1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9E3CBCB19A3C6B3007760A1 /* Foundation.framework */,
+				D9E3CBCD19A3C6B3007760A1 /* CoreGraphics.framework */,
+				D9E3CBCF19A3C6B3007760A1 /* UIKit.framework */,
+				D9E3CBED19A3C6B3007760A1 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D9E3CBD119A3C6B3007760A1 /* ShortcutPOS */ = {
+			isa = PBXGroup;
+			children = (
+				D9E3CC0619A3C86D007760A1 /* Core */,
+				D9E3CC0719A3C987007760A1 /* ViewControllers */,
+				D9E3CBE619A3C6B3007760A1 /* Images.xcassets */,
+				D9E3CBD219A3C6B3007760A1 /* Supporting Files */,
+			);
+			path = ShortcutPOS;
+			sourceTree = "<group>";
+		};
+		D9E3CBD219A3C6B3007760A1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D9E3CBD319A3C6B3007760A1 /* ShortcutPOS-Info.plist */,
+				D9E3CBD419A3C6B3007760A1 /* InfoPlist.strings */,
+				D9E3CBD719A3C6B3007760A1 /* main.m */,
+				D9E3CBD919A3C6B3007760A1 /* ShortcutPOS-Prefix.pch */,
+				D9E3CC0919A3CAEF007760A1 /* POSConfiguration.h */,
+				D9E3CC0A19A3CB5D007760A1 /* POSConfiguration.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D9E3CBF319A3C6B3007760A1 /* ShortcutPOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				D9E3CBF919A3C6B3007760A1 /* ShortcutPOSTests.m */,
+				D9E3CBF419A3C6B3007760A1 /* Supporting Files */,
+			);
+			path = ShortcutPOSTests;
+			sourceTree = "<group>";
+		};
+		D9E3CBF419A3C6B3007760A1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D9E3CBF519A3C6B3007760A1 /* ShortcutPOSTests-Info.plist */,
+				D9E3CBF619A3C6B3007760A1 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D9E3CC0619A3C86D007760A1 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				D9E3CBDA19A3C6B3007760A1 /* POSAppDelegate.h */,
+				D9E3CBDB19A3C6B3007760A1 /* POSAppDelegate.m */,
+				D9E3CBDD19A3C6B3007760A1 /* Main_iPhone.storyboard */,
+				D9E3CBE019A3C6B3007760A1 /* Main_iPad.storyboard */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		D9E3CC0719A3C987007760A1 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D9E3CC0319A3C782007760A1 /* POSWebViewController.h */,
+				D9E3CC0419A3C782007760A1 /* POSWebViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D9E3CBC719A3C6B3007760A1 /* ShortcutPOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9E3CBFD19A3C6B3007760A1 /* Build configuration list for PBXNativeTarget "ShortcutPOS" */;
+			buildPhases = (
+				D9E3CBC419A3C6B3007760A1 /* Sources */,
+				D9E3CBC519A3C6B3007760A1 /* Frameworks */,
+				D9E3CBC619A3C6B3007760A1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShortcutPOS;
+			productName = ShortcutPOS;
+			productReference = D9E3CBC819A3C6B3007760A1 /* ShortcutPOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D9E3CBEB19A3C6B3007760A1 /* ShortcutPOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9E3CC0019A3C6B3007760A1 /* Build configuration list for PBXNativeTarget "ShortcutPOSTests" */;
+			buildPhases = (
+				D9E3CBE819A3C6B3007760A1 /* Sources */,
+				D9E3CBE919A3C6B3007760A1 /* Frameworks */,
+				D9E3CBEA19A3C6B3007760A1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D9E3CBF219A3C6B3007760A1 /* PBXTargetDependency */,
+			);
+			name = ShortcutPOSTests;
+			productName = ShortcutPOSTests;
+			productReference = D9E3CBEC19A3C6B3007760A1 /* ShortcutPOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D9E3CBC019A3C6B3007760A1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = POS;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = Shortcut;
+				TargetAttributes = {
+					D9E3CBEB19A3C6B3007760A1 = {
+						TestTargetID = D9E3CBC719A3C6B3007760A1;
+					};
+				};
+			};
+			buildConfigurationList = D9E3CBC319A3C6B3007760A1 /* Build configuration list for PBXProject "ShortcutPOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D9E3CBBF19A3C6B3007760A1;
+			productRefGroup = D9E3CBC919A3C6B3007760A1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D9E3CBC719A3C6B3007760A1 /* ShortcutPOS */,
+				D9E3CBEB19A3C6B3007760A1 /* ShortcutPOSTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D9E3CBC619A3C6B3007760A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9E3CBE219A3C6B3007760A1 /* Main_iPad.storyboard in Resources */,
+				D9E3CBE719A3C6B3007760A1 /* Images.xcassets in Resources */,
+				D9E3CBDF19A3C6B3007760A1 /* Main_iPhone.storyboard in Resources */,
+				D9E3CBD619A3C6B3007760A1 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9E3CBEA19A3C6B3007760A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9E3CBF819A3C6B3007760A1 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D9E3CBC419A3C6B3007760A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9E3CC0519A3C782007760A1 /* POSWebViewController.m in Sources */,
+				D9E3CBD819A3C6B3007760A1 /* main.m in Sources */,
+				D9E3CBDC19A3C6B3007760A1 /* POSAppDelegate.m in Sources */,
+				D9E3CC0B19A3CB5D007760A1 /* POSConfiguration.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9E3CBE819A3C6B3007760A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9E3CBFA19A3C6B3007760A1 /* ShortcutPOSTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D9E3CBF219A3C6B3007760A1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D9E3CBC719A3C6B3007760A1 /* ShortcutPOS */;
+			targetProxy = D9E3CBF119A3C6B3007760A1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D9E3CBD419A3C6B3007760A1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9E3CBD519A3C6B3007760A1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D9E3CBDD19A3C6B3007760A1 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9E3CBDE19A3C6B3007760A1 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		D9E3CBE019A3C6B3007760A1 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9E3CBE119A3C6B3007760A1 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		D9E3CBF619A3C6B3007760A1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9E3CBF719A3C6B3007760A1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D9E3CBFB19A3C6B3007760A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D9E3CBFC19A3C6B3007760A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D9E3CBFE19A3C6B3007760A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ShortcutPOS/ShortcutPOS-Prefix.pch";
+				INFOPLIST_FILE = "ShortcutPOS/ShortcutPOS-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D9E3CBFF19A3C6B3007760A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ShortcutPOS/ShortcutPOS-Prefix.pch";
+				INFOPLIST_FILE = "ShortcutPOS/ShortcutPOS-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		D9E3CC0119A3C6B3007760A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ShortcutPOS.app/ShortcutPOS";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ShortcutPOS/ShortcutPOS-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ShortcutPOSTests/ShortcutPOSTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		D9E3CC0219A3C6B3007760A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ShortcutPOS.app/ShortcutPOS";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ShortcutPOS/ShortcutPOS-Prefix.pch";
+				INFOPLIST_FILE = "ShortcutPOSTests/ShortcutPOSTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D9E3CBC319A3C6B3007760A1 /* Build configuration list for PBXProject "ShortcutPOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9E3CBFB19A3C6B3007760A1 /* Debug */,
+				D9E3CBFC19A3C6B3007760A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9E3CBFD19A3C6B3007760A1 /* Build configuration list for PBXNativeTarget "ShortcutPOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9E3CBFE19A3C6B3007760A1 /* Debug */,
+				D9E3CBFF19A3C6B3007760A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D9E3CC0019A3C6B3007760A1 /* Build configuration list for PBXNativeTarget "ShortcutPOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9E3CC0119A3C6B3007760A1 /* Debug */,
+				D9E3CC0219A3C6B3007760A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D9E3CBC019A3C6B3007760A1 /* Project object */;
+}
