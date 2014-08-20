@@ -13,7 +13,8 @@
         UIWebViewDelegate
     >
 
-@property UIWebView *contentWebView;
+@property UIView *webViewWrapperView;
+@property UIWebView *webView;
 @property BOOL loadedAtLeastOnePage;
 
 @end
@@ -24,23 +25,52 @@
 {
     [super viewDidLoad];
     
-
-    self.contentWebView = [[UIWebView alloc] init];
-    self.contentWebView.delegate = self;
+    self.webViewWrapperView = [[UIView alloc] init];
+    [self.view addSubview:self.webViewWrapperView];
     
     if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
-        self.contentWebView.frame = CGRectMake(0, 0,
-                                               self.view.frame.size.width,
-                                               self.view.frame.size.height);
+        self.webViewWrapperView.frame = CGRectMake(0, 0,
+                                        self.view.frame.size.width,
+                                        self.view.frame.size.height);
     } else {
-        self.contentWebView.frame = CGRectMake(0, 0,
-                                               self.view.frame.size.height,
-                                               self.view.frame.size.width);
+        self.webViewWrapperView.frame = CGRectMake(0, 0,
+                                        self.view.frame.size.height,
+                                        self.view.frame.size.width);
     }
     
-    [self.view addSubview:self.contentWebView];
+    // Webview
+    self.webView = [[UIWebView alloc] init];
+    self.webView.delegate = self;
+    self.webView.frame = self.webViewWrapperView.frame;
+    [self.webViewWrapperView addSubview:self.webView];
     
-    [self.contentWebView
+    // Reload button
+    float width, height;
+    
+    UIImage *reloadImage = [UIImage imageNamed:@"reload"];
+    UIImageView *reloadImageView = [[UIImageView alloc] initWithImage:reloadImage];
+    reloadImageView.tag = kReloadImageViewTag;
+    reloadImageView.userInteractionEnabled = true;
+    [reloadImageView
+     addGestureRecognizer:[[UITapGestureRecognizer alloc]
+                           initWithTarget:self
+                           action:@selector(reloadImageTapped:)]];
+
+    // align at the bottom left
+    width = 50; height = 50;
+    reloadImageView.frame = CGRectMake(0,
+                                       self.webViewWrapperView.frame.size.height - height,
+                                       width, height);
+    
+    [self.webViewWrapperView addSubview:reloadImageView];
+
+    self.webViewWrapperView.frame = CGRectMake(0, 0,
+                                               self.view.frame.size.width,
+                                               self.view.frame.size.height);
+
+    
+    
+    [self.webView
         loadRequest:[NSURLRequest
                      requestWithURL:[NSURL
                                      URLWithString:[POSConfiguration serverBaseURL]]]];
@@ -62,7 +92,7 @@
 //    loadingLabel.tag = kURLLoadingLabelTag;
 //    loadingLabel.font = [UIFont fontWithName:@"Helvetica" size:40];
 //    [loadingLabel sizeToFit];
-//    loadingLabel.center = self.contentWebView.center;
+//    loadingLabel.center = self.webView.center;
 //    
 //    [self.view addSubview:loadingLabel];
 }
@@ -80,6 +110,14 @@
     NSLog(@"didFailLoadWithError %@", error);
 }
 
+#pragma mark - Gesture actions
+
+- (void)reloadImageTapped:(UITapGestureRecognizer *)recognizer
+{
+    self.loadedAtLeastOnePage = false;
+    [self.webView reload];
+}
+
 
 #pragma mark - POS status view actions
 
@@ -88,7 +126,7 @@
     UIView *statusView = [[UIView alloc] init];
     statusView.tag = kStatusViewTag;
     statusView.hidden = true;
-    statusView.frame = self.contentWebView.frame;
+    statusView.frame = self.webViewWrapperView.frame;
     [self.view addSubview:statusView];
     
     UIView *messageLabel = [[UILabel alloc] init];
@@ -106,7 +144,7 @@
 
 - (void)showStatusView:(NSString *)message withErrorStyle:(BOOL)withErrorStyle
 {
-    self.contentWebView.hidden = true;
+    self.webViewWrapperView.hidden = true;
     
     UIView *statusView = [self.view viewWithTag:kStatusViewTag];
     
@@ -132,7 +170,7 @@
 
 - (void)hideStatusView
 {
-    self.contentWebView.hidden = false;
+    self.webViewWrapperView.hidden = false;
     
     UIView *statusView = [self.view viewWithTag:kStatusViewTag];
     statusView.hidden = true;
