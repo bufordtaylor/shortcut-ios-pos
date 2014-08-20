@@ -13,7 +13,8 @@
         UIWebViewDelegate
     >
 
-@property (nonatomic, readwrite, strong) UIWebView *contentWebView;
+@property UIWebView *contentWebView;
+@property BOOL loadedAtLeastOnePage;
 
 @end
 
@@ -23,9 +24,7 @@
 {
     [super viewDidLoad];
     
-    // temporary, to check the dimension of the webview
-//    self.view.backgroundColor = [UIColor redColor];
-    
+
     self.contentWebView = [[UIWebView alloc] init];
     self.contentWebView.delegate = self;
     
@@ -38,8 +37,6 @@
                                                self.view.frame.size.height,
                                                self.view.frame.size.width);
     }
-    
-//    NSLog(@"%@ %@", NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.contentWebView.frame));
     
     [self.view addSubview:self.contentWebView];
     
@@ -54,25 +51,91 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    UILabel *loadingLabel = [[UILabel alloc] init];
-    loadingLabel.text = @"Loading...";
-    loadingLabel.textColor = [UIColor colorWithWhite:0.1 alpha:1];
-    loadingLabel.tag = kURLLoadingLabelTag;
-    loadingLabel.font = [UIFont fontWithName:@"Helvetica" size:40];
-    [loadingLabel sizeToFit];
-    loadingLabel.center = self.contentWebView.center;
+    NSLog(@"webViewDidStartLoad");
     
-    [self.view addSubview:loadingLabel];
+    if (!self.loadedAtLeastOnePage) {
+        [self showStatusView:@"Loading Shortcut POS ..."];
+    }
+//    UILabel *loadingLabel = [[UILabel alloc] init];
+//    loadingLabel.text = @"Loading...";
+//    loadingLabel.textColor = [UIColor colorWithWhite:0.1 alpha:1];
+//    loadingLabel.tag = kURLLoadingLabelTag;
+//    loadingLabel.font = [UIFont fontWithName:@"Helvetica" size:40];
+//    [loadingLabel sizeToFit];
+//    loadingLabel.center = self.contentWebView.center;
+//    
+//    [self.view addSubview:loadingLabel];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    UILabel *loadingLabel = (UILabel *)[self.view viewWithTag:kURLLoadingLabelTag];
-    [loadingLabel removeFromSuperview];
+    NSLog(@"webViewDidFinishLoad");
+    
+    self.loadedAtLeastOnePage = true;
+    [self hideStatusView];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
+    NSLog(@"didFailLoadWithError %@", error);
+}
+
+
+#pragma mark - POS status view actions
+
+- (UIView *)setStatusView
+{
+    UIView *statusView = [[UIView alloc] init];
+    statusView.tag = kStatusViewTag;
+    statusView.hidden = true;
+    statusView.frame = self.contentWebView.frame;
+    [self.view addSubview:statusView];
+    
+    UIView *messageLabel = [[UILabel alloc] init];
+    messageLabel.tag = kStatusMessageLabelTag;
+    [statusView addSubview:messageLabel];
+    
+    return statusView;
+}
+
+
+- (void)showStatusView:(NSString *)message
+{
+    [self showStatusView:message withErrorStyle:false];
+}
+
+- (void)showStatusView:(NSString *)message withErrorStyle:(BOOL)withErrorStyle
+{
+    self.contentWebView.hidden = true;
+    
+    UIView *statusView = [self.view viewWithTag:kStatusViewTag];
+    
+    if (statusView == nil) {
+        statusView = [self setStatusView];
+    }
+    
+    statusView.hidden = false;
+    
+    UILabel *messageLabel = (UILabel *)[statusView viewWithTag:kStatusMessageLabelTag];
+    messageLabel.text = message;
+    messageLabel.textColor = [UIColor whiteColor];
+    messageLabel.font = [UIFont fontWithName:@"Helvetica" size:25];
+    [messageLabel sizeToFit];
+    messageLabel.center = statusView.center;
+    
+    if (withErrorStyle) {
+        statusView.backgroundColor = [UIColor redColor];
+    } else {
+        statusView.backgroundColor = [POSConfiguration colorFor:@"shortcut-purple"];
+    }
+}
+
+- (void)hideStatusView
+{
+    self.contentWebView.hidden = false;
+    
+    UIView *statusView = [self.view viewWithTag:kStatusViewTag];
+    statusView.hidden = true;
 }
 
 

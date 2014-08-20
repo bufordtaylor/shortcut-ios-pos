@@ -14,5 +14,6 @@
 
 
 typedef NS_ENUM(NSInteger, ViewTags) {
-    kURLLoadingLabelTag = 100
+    kStatusViewTag = 100,
+    kStatusMessageLabelTag
 };

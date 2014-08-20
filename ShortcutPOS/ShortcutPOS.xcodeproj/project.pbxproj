@@ -23,6 +23,7 @@
 		D9E3CBFA19A3C6B3007760A1 /* ShortcutPOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E3CBF919A3C6B3007760A1 /* ShortcutPOSTests.m */; };
 		D9E3CC0519A3C782007760A1 /* POSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E3CC0419A3C782007760A1 /* POSWebViewController.m */; };
 		D9E3CC0B19A3CB5D007760A1 /* POSConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E3CC0A19A3CB5D007760A1 /* POSConfiguration.m */; };
+		D9E3CC0F19A4F7B8007760A1 /* UIColor+HexRGB.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E3CC0E19A4F7B8007760A1 /* UIColor+HexRGB.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 		D9E3CC0419A3C782007760A1 /* POSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSWebViewController.m; sourceTree = "<group>"; };
 		D9E3CC0919A3CAEF007760A1 /* POSConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSConfiguration.h; sourceTree = "<group>"; };
 		D9E3CC0A19A3CB5D007760A1 /* POSConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSConfiguration.m; sourceTree = "<group>"; };
+		D9E3CC0D19A4F7B8007760A1 /* UIColor+HexRGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexRGB.h"; sourceTree = "<group>"; };
+		D9E3CC0E19A4F7B8007760A1 /* UIColor+HexRGB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexRGB.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +122,7 @@
 			children = (
 				D9E3CC0619A3C86D007760A1 /* Core */,
 				D9E3CC0719A3C987007760A1 /* ViewControllers */,
+				D9E3CC0C19A4F735007760A1 /* Utils */,
 				D9E3CBE619A3C6B3007760A1 /* Images.xcassets */,
 				D9E3CBD219A3C6B3007760A1 /* Supporting Files */,
 			);
@@ -174,6 +178,15 @@
 				D9E3CC0419A3C782007760A1 /* POSWebViewController.m */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		D9E3CC0C19A4F735007760A1 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D9E3CC0D19A4F7B8007760A1 /* UIColor+HexRGB.h */,
+				D9E3CC0E19A4F7B8007760A1 /* UIColor+HexRGB.m */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,6 +291,7 @@
 				D9E3CC0519A3C782007760A1 /* POSWebViewController.m in Sources */,
 				D9E3CBD819A3C6B3007760A1 /* main.m in Sources */,
 				D9E3CBDC19A3C6B3007760A1 /* POSAppDelegate.m in Sources */,
+				D9E3CC0F19A4F7B8007760A1 /* UIColor+HexRGB.m in Sources */,
 				D9E3CC0B19A3CB5D007760A1 /* POSConfiguration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

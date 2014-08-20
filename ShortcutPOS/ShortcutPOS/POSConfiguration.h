@@ -7,6 +7,9 @@
 + (NSString *)serverBaseURL;
 + (NSString *)serverBaseURLViaSSL:(BOOL)viaSSL;
 
++ (NSString *)colorStringOf:(NSString *)colorKeyName;
++ (UIColor *)colorFor:(NSString *)colorKeyName;
+
 + (BOOL)production;
 + (BOOL)development;
 
