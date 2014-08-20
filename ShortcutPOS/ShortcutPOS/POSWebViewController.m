@@ -23,12 +23,23 @@
 {
     [super viewDidLoad];
     
+    // temporary, to check the dimension of the webview
+//    self.view.backgroundColor = [UIColor redColor];
+    
     self.contentWebView = [[UIWebView alloc] init];
     self.contentWebView.delegate = self;
-    self.contentWebView.frame = CGRectMake(0,
-                                           0,
-                                           self.view.frame.size.width,
-                                           self.view.frame.size.height);
+    
+    if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+        self.contentWebView.frame = CGRectMake(0, 0,
+                                               self.view.frame.size.width,
+                                               self.view.frame.size.height);
+    } else {
+        self.contentWebView.frame = CGRectMake(0, 0,
+                                               self.view.frame.size.height,
+                                               self.view.frame.size.width);
+    }
+    
+//    NSLog(@"%@ %@", NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.contentWebView.frame));
     
     [self.view addSubview:self.contentWebView];
     
@@ -49,7 +60,7 @@
     loadingLabel.tag = kURLLoadingLabelTag;
     loadingLabel.font = [UIFont fontWithName:@"Helvetica" size:40];
     [loadingLabel sizeToFit];
-    loadingLabel.center = self.view.center;
+    loadingLabel.center = self.contentWebView.center;
     
     [self.view addSubview:loadingLabel];
 }
