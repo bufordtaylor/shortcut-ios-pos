@@ -16,5 +16,6 @@
 typedef NS_ENUM(NSInteger, ViewTags) {
     kStatusViewTag = 100,
     kStatusMessageLabelTag,
-    kReloadImageViewTag
+    kReloadImageViewTag,
+    kReloadAfterErrorButtonTag
 };
