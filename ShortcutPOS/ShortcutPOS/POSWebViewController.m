@@ -25,7 +25,13 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [POSConfiguration colorFor:@"shortcut-purple"];
+    
     self.webViewWrapperView = [[UIView alloc] init];
+    self.webViewWrapperView.hidden = true;
+    self.webViewWrapperView.frame = CGRectMake(0, 0,
+                                               self.view.frame.size.width,
+                                               self.view.frame.size.height);
     [self.view addSubview:self.webViewWrapperView];
     
     if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
@@ -42,11 +48,11 @@
     self.webView = [[UIWebView alloc] init];
     self.webView.delegate = self;
     self.webView.frame = self.webViewWrapperView.frame;
+    self.webView.hidden = true;
     [self.webViewWrapperView addSubview:self.webView];
     
     // Reload button
     float width, height;
-    
     UIImage *reloadImage = [UIImage imageNamed:@"reload"];
     UIImageView *reloadImageView = [[UIImageView alloc] initWithImage:reloadImage];
     reloadImageView.tag = kReloadImageViewTag;
@@ -55,21 +61,16 @@
      addGestureRecognizer:[[UITapGestureRecognizer alloc]
                            initWithTarget:self
                            action:@selector(reloadImageTapped:)]];
-
-    // align at the bottom left
+    // reload button align at the bottom left
     width = 50; height = 50;
     reloadImageView.frame = CGRectMake(0,
                                        self.webViewWrapperView.frame.size.height - height,
                                        width, height);
-    
     [self.webViewWrapperView addSubview:reloadImageView];
-
-    self.webViewWrapperView.frame = CGRectMake(0, 0,
-                                               self.view.frame.size.width,
-                                               self.view.frame.size.height);
-
     
     
+
+    // Loading POS from Shortcut servers
     [self.webView
         loadRequest:[NSURLRequest
                      requestWithURL:[NSURL
@@ -84,17 +85,9 @@
     NSLog(@"webViewDidStartLoad");
     
     if (!self.loadedAtLeastOnePage) {
+        self.webView.hidden = false;
         [self showStatusView:@"Loading Shortcut POS ..."];
     }
-//    UILabel *loadingLabel = [[UILabel alloc] init];
-//    loadingLabel.text = @"Loading...";
-//    loadingLabel.textColor = [UIColor colorWithWhite:0.1 alpha:1];
-//    loadingLabel.tag = kURLLoadingLabelTag;
-//    loadingLabel.font = [UIFont fontWithName:@"Helvetica" size:40];
-//    [loadingLabel sizeToFit];
-//    loadingLabel.center = self.webView.center;
-//    
-//    [self.view addSubview:loadingLabel];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
@@ -108,6 +101,8 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     NSLog(@"didFailLoadWithError %@", error);
+    [self showStatusView:@"Failed to contact the POS server.\n\nAre you connected to the internet?"
+          withErrorStyle:true];
 }
 
 #pragma mark - Gesture actions
@@ -155,10 +150,17 @@
     statusView.hidden = false;
     
     UILabel *messageLabel = (UILabel *)[statusView viewWithTag:kStatusMessageLabelTag];
+    messageLabel.numberOfLines = 0;
     messageLabel.text = message;
+    messageLabel.textAlignment = NSTextAlignmentCenter;
     messageLabel.textColor = [UIColor whiteColor];
-    messageLabel.font = [UIFont fontWithName:@"Helvetica" size:25];
-    [messageLabel sizeToFit];
+    messageLabel.font = [UIFont fontWithName:@"Helvetica" size:20];
+    CGSize messageLabelSize = [messageLabel
+                               sizeThatFits:CGSizeMake(statusView.frame.size.width * 0.95,
+                                                       MAXFLOAT)];
+    messageLabel.frame = CGRectMake(0, 0, messageLabelSize.width, messageLabelSize.height);
+    NSLog(@"ML %@", NSStringFromCGSize(messageLabel.frame.size));
+
     messageLabel.center = statusView.center;
     
     if (withErrorStyle) {
