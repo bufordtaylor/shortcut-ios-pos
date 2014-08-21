@@ -7,10 +7,12 @@
 //
 
 #import "POSWebViewController.h"
+#import "CardIO.h"
 
 @interface POSWebViewController ()
     <
         UIWebViewDelegate
+        ,CardIOPaymentViewControllerDelegate
     >
 
 @property UIView *webViewWrapperView;
@@ -99,7 +101,7 @@
                                   URLWithString:[POSConfiguration serverBaseURL]]]];
 }
 
-#pragma mark - Web view delegates
+#pragma mark - UIWebViewDelegate
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
@@ -159,6 +161,14 @@
     if ([self.webView canGoBack]) {
         [self.webView goBack];
     }
+}
+
+- (void)scanCardTapped:(UITapGestureRecognizer *)recognizer
+{
+    CardIOPaymentViewController *scanViewController =
+        [[CardIOPaymentViewController alloc] initWithPaymentDelegate:self];
+    scanViewController.appToken = @"df4cb3fa0320437a9da7de5961888a3d";
+    [self presentViewController:scanViewController animated:YES completion:nil];
 }
 
 #pragma mark - POS status view actions
@@ -242,6 +252,20 @@
     UIView *statusView = [self.view viewWithTag:kStatusViewTag];
     statusView.hidden = true;
 }
+
+#pragma mark - CardIOPaymentViewControllerDelegate
+
+- (void)userDidCancelPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
+    [paymentViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)userDidProvideCreditCardInfo:(CardIOCreditCardInfo *)cardInfo
+             inPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
+    // do something with cardInfo here
+    [paymentViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 
 /*
 #pragma mark - Navigation
