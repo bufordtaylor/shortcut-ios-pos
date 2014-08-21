@@ -27,6 +27,7 @@
     
     self.view.backgroundColor = [POSConfiguration colorFor:@"shortcut-purple"];
     
+    // Wrapper around the WebView
     self.webViewWrapperView = [[UIView alloc] init];
     self.webViewWrapperView.hidden = true;
     self.webViewWrapperView.frame = CGRectMake(0, 0,
@@ -61,6 +62,13 @@
     self.webView.hidden = true;
     [self.webViewWrapperView addSubview:self.webView];
     
+    // Handle swiping right (=> from left to right) to go to previous page
+    UISwipeGestureRecognizer *swipeRightGesture =
+        [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                  action:@selector(swipedRight:)];
+    swipeRightGesture.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.webView addGestureRecognizer:swipeRightGesture];
+
     // Reload button
     float width, height;
     UIImage *reloadImage = [UIImage imageNamed:@"reload"];
@@ -70,7 +78,7 @@
     [reloadImageView
      addGestureRecognizer:[[UITapGestureRecognizer alloc]
                            initWithTarget:self
-                           action:@selector(reloadImageTapped:)]];
+                           action:@selector(reloadTapped:)]];
     // reload button align at the bottom left
     width = 50; height = 50;
     reloadImageView.frame = CGRectMake(0,
@@ -126,7 +134,7 @@
 
 #pragma mark - Gesture actions
 
-- (void)reloadImageTapped:(UITapGestureRecognizer *)recognizer
+- (void)reloadTapped:(UITapGestureRecognizer *)recognizer
 {
     self.loadedAtLeastOnePage = false;
     
@@ -139,6 +147,12 @@
     }
 }
 
+- (void)swipedRight:(UIGestureRecognizer *)recognizer
+{
+    if ([self.webView canGoBack]) {
+        [self.webView goBack];
+    }
+}
 
 #pragma mark - POS status view actions
 
@@ -179,7 +193,7 @@
                                      forState:UIControlStateNormal];
         [reloadAfterErrorButton setTitle:@"Try again" forState:UIControlStateNormal];
         [reloadAfterErrorButton addTarget:self
-                                   action:@selector(reloadImageTapped:)
+                                   action:@selector(reloadTapped:)
                          forControlEvents:UIControlEventTouchUpInside];
         reloadAfterErrorButton.backgroundColor = [UIColor whiteColor];
         [reloadAfterErrorButton sizeToFit];
@@ -220,11 +234,6 @@
     
     UIView *statusView = [self.view viewWithTag:kStatusViewTag];
     statusView.hidden = true;
-}
-
-- (void)setReloadAfterErrorButton
-{
-    
 }
 
 /*
