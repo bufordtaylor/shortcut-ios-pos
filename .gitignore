@@ -17,3 +17,7 @@ DerivedData
 .idea/
 
 Pods/
+
+ShortcutPOS/xcuserdata
+ShortcutPOS.xcworkspace/xcuserdata/christophe.xcuserdatad/UserInterfaceState.xcuserstate
+*.swp

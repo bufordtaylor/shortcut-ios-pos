@@ -57,6 +57,17 @@
         }
     }
     
+    
+    // Setting a custom UserAgent that will allow the web app to display special content
+    NSString *newUserAgent =
+         [NSString
+          stringWithFormat:@"ShortcutPOS-iOS/%@_%@",
+              [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
+              [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+    NSDictionary *dictionary = [NSDictionary
+                                dictionaryWithObjectsAndKeys:newUserAgent, @"UserAgent", nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+    
     // Webview
     self.webView = [[UIWebView alloc] init];
     self.webView.delegate = self;
@@ -70,7 +81,7 @@
                                                   action:@selector(swipedRight:)];
     swipeRightGesture.direction = UISwipeGestureRecognizerDirectionRight;
     [self.webView addGestureRecognizer:swipeRightGesture];
-
+    
     // Reload button
     float width, height;
     UIImage *reloadImage = [UIImage imageNamed:@"reload"];
@@ -95,10 +106,12 @@
 
 - (void)loadWebPOS
 {
+    NSString *posURL = [[POSConfiguration serverBaseURL]
+                        stringByAppendingString:@"/pos/concessions"];
     [self.webView
      loadRequest:[NSURLRequest
                   requestWithURL:[NSURL
-                                  URLWithString:[POSConfiguration serverBaseURL]]]];
+                                  URLWithString:posURL]]];
 }
 
 #pragma mark - UIWebViewDelegate
@@ -122,9 +135,9 @@
     
     NSData *cookiesData = [NSKeyedArchiver archivedDataWithRootObject:
                                 [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:cookiesData forKey:@"cookies"];
-    [defaults synchronize];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:cookiesData forKey:@"cookies"];
+    [userDefaults synchronize];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error

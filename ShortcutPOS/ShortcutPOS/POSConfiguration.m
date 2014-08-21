@@ -5,7 +5,7 @@
 
 + (NSString *)environment
 {
-//    return @"development"; // comment this line if you want to run in production
+    return @"development"; // comment this line if you want to run in production
     return @"production";
 }
 
@@ -23,7 +23,8 @@
             return @"http://shortcutapp.com";
         }
     } else {
-        return @"http://shortcutapp.dev";
+//        return @"http://shortcutapp.dev";
+        return @"http://192.168.1.72:1234";
     }
 }
 
