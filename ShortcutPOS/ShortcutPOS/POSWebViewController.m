@@ -44,6 +44,14 @@
                                         self.view.frame.size.width);
     }
     
+    // Settings cookies
+    NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:
+                            [[NSUserDefaults standardUserDefaults] objectForKey:@"cookies"]];
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *cookie in cookies) {
+        [cookieStorage setCookie:cookie];
+    }
+    
     // Webview
     self.webView = [[UIWebView alloc] init];
     self.webView.delegate = self;
@@ -68,12 +76,12 @@
                                        width, height);
     [self.webViewWrapperView addSubview:reloadImageView];
     
-    [self loadPOS];
+    [self loadWebPOS];
 }
 
 #pragma mark - Web view related actions
 
-- (void)loadPOS
+- (void)loadWebPOS
 {
     [self.webView
      loadRequest:[NSURLRequest
@@ -99,6 +107,12 @@
     
     self.loadedAtLeastOnePage = true;
     [self hideStatusView];
+    
+    NSData *cookiesData = [NSKeyedArchiver archivedDataWithRootObject:
+                                [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:cookiesData forKey:@"cookies"];
+    [defaults synchronize];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -117,7 +131,7 @@
     // if the request failed the very first time because the device wasn't online,
     // we can't use "reload" on the webView.
     if ([[self.webView.request.URL absoluteString] isEqualToString:@""]) {
-        [self loadPOS];
+        [self loadWebPOS];
     } else {
         [self.webView reload];
     }
