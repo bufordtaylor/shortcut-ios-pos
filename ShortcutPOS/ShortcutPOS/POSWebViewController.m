@@ -80,7 +80,7 @@
                            initWithTarget:self
                            action:@selector(reloadTapped:)]];
     // reload button align at the bottom left
-    width = 50; height = 50;
+    width = 30; height = 30;
     reloadImageView.frame = CGRectMake(0,
                                        self.webViewWrapperView.frame.size.height - height,
                                        width, height);
@@ -128,6 +128,13 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     NSLog(@"didFailLoadWithError %@", error);
+    
+    // we don't want to show an error if a page loading was cancelled,
+    // which can happen if a user taps a link quickly twice.
+    if (error.code == NSURLErrorCancelled) {
+        return;
+    }
+    
     [self showStatusView:@"Failed to contact the POS server.\n\nAre you connected to the internet?"
                withError:true];
 }
