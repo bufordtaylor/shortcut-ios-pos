@@ -45,11 +45,13 @@
     }
     
     // Settings cookies
-    NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:
-                            [[NSUserDefaults standardUserDefaults] objectForKey:@"cookies"]];
-    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (NSHTTPCookie *cookie in cookies) {
-        [cookieStorage setCookie:cookie];
+    NSData *keyedCookies = [[NSUserDefaults standardUserDefaults] objectForKey:@"cookies"];
+    if (keyedCookies) {
+        NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:keyedCookies];
+        NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        for (NSHTTPCookie *cookie in cookies) {
+            [cookieStorage setCookie:cookie];
+        }
     }
     
     // Webview
