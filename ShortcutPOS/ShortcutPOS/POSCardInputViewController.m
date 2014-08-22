@@ -61,7 +61,7 @@
     imageView.tag = kCardExpirationDateImageViewTag;
     [self.view addSubview:imageView];
     
-    // Text fields
+    // Text fields and buttons
     self.cardNumberTextField = [[UITextField alloc] init];
     self.cardNumberTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.cardNumberTextField.placeholder = @"Card Number";
@@ -79,6 +79,7 @@
     self.cardExpirationDateTextField.placeholder = @"Expiration Date";
     self.cardExpirationDateTextField.returnKeyType = UIReturnKeyDone;
     self.cardExpirationDateTextField.delegate = self;
+    [self.view addSubview:self.cardExpirationDateTextField];
 
     self.cardExpirationDatePickerView = [[UIPickerView alloc] init];
     self.cardExpirationDatePickerView.tag = kCardExpirationDatePickerViewTag;
@@ -87,7 +88,13 @@
     self.cardExpirationDatePickerView.showsSelectionIndicator = YES;
     self.cardExpirationDateTextField.inputView = self.cardExpirationDatePickerView;
     
-    [self.view addSubview:self.cardExpirationDateTextField];
+    UIButton *scanCardButton = [[UIButton alloc] init];
+    scanCardButton.tag = kScanCardButtonTag;
+    [scanCardButton setTitle:@"SCAN CARD" forState:UIControlStateNormal];
+    [scanCardButton addTarget:self
+                               action:@selector(scanCardTapped:)
+                     forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:scanCardButton];
 
     // BSKeyboardControls
     [self setKeyboardControls:[[BSKeyboardControls alloc]
@@ -110,6 +117,7 @@
     UIImageView *cardImageView = (UIImageView *)[self.view viewWithTag:kCardImageViewTag];
     UIImageView *cardCvcImageView = (UIImageView *)[self.view viewWithTag:kCardCvcImageViewTag];
     UIImageView *cardExpirationDateImageView = (UIImageView *)[self.view viewWithTag:kCardExpirationDateImageViewTag];
+    UIButton *scanCardButton = (UIButton *)[self.view viewWithTag:kScanCardButtonTag];
     
     paddingTop = 50, paddingRight = 30, paddingBottom = 10, paddingLeft = 30;
     cardFieldsMarginTop = 30, cardFieldsOriginX = 90;
@@ -168,6 +176,19 @@
                    cardExpirationDateImageView.frame.origin.y,
                    cardFieldsWidth,
                    cardFieldsHeight);
+    
+    [scanCardButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    scanCardButton.titleLabel.font = [UIFont fontWithName:[POSConfiguration defaultFont]
+                                                     size:14];
+    scanCardButton.backgroundColor = [POSConfiguration colorFor:@"shortcut-purple"];
+    [scanCardButton sizeToFit];
+    scanCardButton.frame = CGRectInset(scanCardButton.frame, -10, 0);
+    scanCardButton.frame = CGRectMake(self.view.frame.size.width
+                                        - scanCardButton.frame.size.width
+                                        - paddingRight,
+                                      titleLabel.frame.origin.y,
+                                      scanCardButton.frame.size.width,
+                                      scanCardButton.frame.size.height);
 
 }
 
@@ -197,7 +218,14 @@
 - (void)userDidProvideCreditCardInfo:(CardIOCreditCardInfo *)cardInfo
              inPaymentViewController:(CardIOPaymentViewController *)paymentViewController
 {
-    // do something with cardInfo here
+    self.cardNumberTextField.text = cardInfo.cardNumber;
+    self.cardCvcTextField.text = cardInfo.cvv;
+    self.selectedCardExpirationMonth = @(cardInfo.expiryMonth);
+    self.selectedCardExpirationYear = @(cardInfo.expiryYear);
+    self.cardExpirationDateTextField.text = [NSString stringWithFormat:@"%@/%@",
+                                                 @(cardInfo.expiryMonth),
+                                                 @(cardInfo.expiryYear)];
+
     [paymentViewController dismissViewControllerAnimated:YES completion:nil];
 }
 

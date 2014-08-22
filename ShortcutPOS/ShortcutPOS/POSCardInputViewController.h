@@ -22,4 +22,5 @@ typedef NS_ENUM(NSInteger, POSCardInputTags) {
     kCardExpirationDateTextFieldTag,
     kCardExpirationDatePickerViewTag,
     kCardExpirationDateTextFieldInputViewTag,
+    kScanCardButtonTag,
 };
