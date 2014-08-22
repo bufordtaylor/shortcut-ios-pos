@@ -102,16 +102,17 @@
 
 }
 
-/*
+///*
 // tmp
 - (void)viewDidAppear:(BOOL)animated
 {
     POSCardInputViewController *cardInputVC = [[POSCardInputViewController alloc] init];
     [self presentViewController:cardInputVC animated:YES completion:nil];
 }
-*/
+//*/
 
-#pragma mark - Web view related actions
+#pragma mark - UIWebView
+#pragma mark UIWebView actions
 
 - (void)loadWebPOS
 {
@@ -123,7 +124,7 @@
                                   URLWithString:posURL]]];
 }
 
-#pragma mark - UIWebViewDelegate
+#pragma mark UIWebViewDelegate
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
@@ -176,13 +177,6 @@
             
             POSCardInputViewController *cardInputVC = [[POSCardInputViewController alloc] init];
             [self presentViewController:cardInputVC animated:YES completion:nil];
-
-//            [[[UIAlertView alloc] initWithTitle:@"UIAlertView from webview!"
-//                                        message:@"getStripeToken please!"
-//                                       delegate:nil
-//                              cancelButtonTitle:@"cancel"
-//                              otherButtonTitles:nil, nil]
-//             show];
         }
         
         return false;
@@ -191,7 +185,7 @@
     return true;
 }
 
-#pragma mark - Gesture actions
+#pragma mark - UITapGestureRecognizer actions
 
 - (void)reloadTapped:(UITapGestureRecognizer *)recognizer
 {
@@ -213,7 +207,7 @@
     }
 }
 
-#pragma mark - POS status view actions
+#pragma mark - statusView actions
 
 - (void)showStatusView:(NSString *)message
 {

@@ -16,5 +16,10 @@ typedef NS_ENUM(NSInteger, POSCardInputTags) {
     kTitleLabelTag = 100,
     kCardImageViewTag,
     kCardCvcImageViewTag,
-    kCardExpiryDateImageViewTag,
+    kCardExpirationDateImageViewTag,
+    kCardNumberTextFieldTag,
+    kCardCvcTextFieldTag,
+    kCardExpirationDateTextFieldTag,
+    kCardExpirationDatePickerViewTag,
+    kCardExpirationDateTextFieldInputViewTag,
 };
