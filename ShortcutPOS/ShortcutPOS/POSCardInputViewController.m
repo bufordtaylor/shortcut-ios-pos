@@ -8,13 +8,16 @@
 
 #import "POSCardInputViewController.h"
 #import "CardIO.h"
+#import "BSKeyboardControls.h"
 
 @interface POSCardInputViewController ()
     <
-        CardIOPaymentViewControllerDelegate
-        , UIPickerViewDelegate
+          UIPickerViewDelegate
         , UIPickerViewDataSource
         , UITextFieldDelegate
+        , UITextViewDelegate
+        , CardIOPaymentViewControllerDelegate
+        , BSKeyboardControlsDelegate
     >
 
 @property UITextField *cardNumberTextField;
@@ -24,6 +27,8 @@
 
 @property NSNumber *selectedCardExpirationMonth;
 @property NSNumber *selectedCardExpirationYear;
+
+@property BSKeyboardControls *keyboardControls;
 
 @end
 
@@ -60,11 +65,13 @@
     self.cardNumberTextField = [[UITextField alloc] init];
     self.cardNumberTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.cardNumberTextField.placeholder = @"Card Number";
+    self.cardNumberTextField.delegate = self;
     [self.view addSubview:self.cardNumberTextField];
     
     self.cardCvcTextField = [[UITextField alloc] init];
     self.cardCvcTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.cardCvcTextField.placeholder = @"CVC Number";
+    self.cardCvcTextField.delegate = self;
     [self.view addSubview:self.cardCvcTextField];
     
     self.cardExpirationDateTextField = [[UITextField alloc] init];
@@ -72,9 +79,23 @@
     self.cardExpirationDateTextField.placeholder = @"Expiration Date";
     self.cardExpirationDateTextField.returnKeyType = UIReturnKeyDone;
     self.cardExpirationDateTextField.delegate = self;
-    [self.view addSubview:self.cardExpirationDateTextField];
+
+    self.cardExpirationDatePickerView = [[UIPickerView alloc] init];
+    self.cardExpirationDatePickerView.tag = kCardExpirationDatePickerViewTag;
+    self.cardExpirationDatePickerView.delegate = self;
+    self.cardExpirationDatePickerView.dataSource = self;
+    self.cardExpirationDatePickerView.showsSelectionIndicator = YES;
+    self.cardExpirationDateTextField.inputView = self.cardExpirationDatePickerView;
     
-    [self setExpirationDatePickerView];
+    [self.view addSubview:self.cardExpirationDateTextField];
+
+    // BSKeyboardControls
+    [self setKeyboardControls:[[BSKeyboardControls alloc]
+                               initWithFields:@[self.cardNumberTextField,
+                                                self.cardCvcTextField,
+                                                self.cardExpirationDateTextField]]];
+    [self.keyboardControls setDelegate:self];
+
 }
 
 - (void)viewDidLayoutSubviews
@@ -183,55 +204,6 @@
 #pragma mark - UIPicker
 #pragma mark UIPicker actions
 
-- (void)setExpirationDatePickerView
-{
-    // Set picker view
-    self.cardExpirationDatePickerView = [[UIPickerView alloc] init];
-    self.cardExpirationDatePickerView.tag = kCardExpirationDatePickerViewTag;
-    self.cardExpirationDatePickerView.delegate = self;
-    self.cardExpirationDatePickerView.dataSource = self;
-    self.cardExpirationDatePickerView.showsSelectionIndicator = YES;
-    
-
-    // Create and configure toolbar that holds "Done button"
-    UIToolbar *pickerToolbar = [[UIToolbar alloc] init];
-    pickerToolbar.barStyle = UIBarStyleBlackOpaque;
-    [pickerToolbar sizeToFit];
-
-    UIBarButtonItem *flexibleSpaceLeft =
-        [[UIBarButtonItem alloc]
-            initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                 target:nil
-                                 action:nil];
-
-    UIBarButtonItem *doneButton =
-        [[UIBarButtonItem alloc] initWithTitle:@"Done"
-                                         style:UIBarButtonItemStyleBordered
-                                        target:self
-                                        action:@selector(pickerDoneButtonPressed)];
-    
-    [doneButton setTintColor:[UIColor whiteColor]];
-    [pickerToolbar setItems:[NSArray arrayWithObjects:flexibleSpaceLeft, doneButton, nil]];
-    
-    
-    // Creating a view wrapper holding the toolbar and the picker
-    UIView *pickerViewWrapper = [[UIView alloc] init];
-    pickerViewWrapper.tag = kCardExpirationDateTextFieldInputViewTag;
-    [pickerViewWrapper addSubview:pickerToolbar];
-    [pickerViewWrapper addSubview:self.cardExpirationDatePickerView];
-    
-    // moving the picker down the height of the toolbar
-    CGRect pickerViewFrame = self.cardExpirationDatePickerView.frame;
-    pickerViewFrame.origin.y = pickerToolbar.frame.size.height;
-    self.cardExpirationDatePickerView.frame = pickerViewFrame;
-    
-    pickerViewWrapper.frame = CGRectMake(0, 0,
-                                         self.cardExpirationDatePickerView.frame.size.width,
-                                         pickerViewFrame.origin.y + pickerViewFrame.size.height);
-    
-    self.cardExpirationDateTextField.inputView = pickerViewWrapper;
-}
-
 - (void)pickerDoneButtonPressed
 {
     [self.view endEditing:YES];
@@ -337,6 +309,28 @@
                  inComponent:1];
         }
     }
+    
+    [self.keyboardControls setActiveField:textField];
+
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    [self.keyboardControls setActiveField:textView];
+}
+
+#pragma mark BSKeyboardDelegate
+
+- (void)keyboardControlsDonePressed:(BSKeyboardControls *)keyboardControls
+{
+    [self.view endEditing:YES];
+}
+
+- (void)keyboardControls:(BSKeyboardControls *)keyboardControls
+           selectedField:(UIView *)field
+             inDirection:(BSKeyboardControlsDirection)direction
+{
+    NSLog(@"xxxaaaaa");
 }
 
 @end

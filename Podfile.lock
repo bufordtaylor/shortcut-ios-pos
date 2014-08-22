@@ -1,10 +1,13 @@
 PODS:
+  - BSKeyboardControls (2.2)
   - CardIO (3.6.3)
 
 DEPENDENCIES:
+  - BSKeyboardControls
   - CardIO (~> 3.6.3)
 
 SPEC CHECKSUMS:
+  BSKeyboardControls: c9aa1bdbb5ecd454aa3d0b2279f79c5dc4b6c6ad
   CardIO: 237e9fd1d69fb4ec4b12ca6fceb0e3ea503c875d
 
 COCOAPODS: 0.33.1
