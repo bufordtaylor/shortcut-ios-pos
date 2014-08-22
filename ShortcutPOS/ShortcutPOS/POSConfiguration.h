@@ -7,10 +7,13 @@
 + (NSString *)serverBaseURL;
 + (NSString *)serverBaseURLViaSSL:(BOOL)viaSSL;
 
++ (BOOL)production;
++ (BOOL)development;
+
 + (NSString *)colorStringOf:(NSString *)colorKeyName;
 + (UIColor *)colorFor:(NSString *)colorKeyName;
 
-+ (BOOL)production;
-+ (BOOL)development;
++ (NSString *)defaultFont;
++ (NSString *)defaultFontBold;
 
 @end

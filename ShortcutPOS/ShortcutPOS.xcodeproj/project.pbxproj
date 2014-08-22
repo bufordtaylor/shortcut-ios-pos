@@ -25,6 +25,7 @@
 		D9E3CC0519A3C782007760A1 /* POSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E3CC0419A3C782007760A1 /* POSWebViewController.m */; };
 		D9E3CC0B19A3CB5D007760A1 /* POSConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E3CC0A19A3CB5D007760A1 /* POSConfiguration.m */; };
 		D9E3CC0F19A4F7B8007760A1 /* UIColor+HexRGB.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E3CC0E19A4F7B8007760A1 /* UIColor+HexRGB.m */; };
+		D9EEBB3219A7573700E4788A /* POSCardInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EEBB3119A7573700E4788A /* POSCardInputViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,8 @@
 		D9E3CC0A19A3CB5D007760A1 /* POSConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSConfiguration.m; sourceTree = "<group>"; };
 		D9E3CC0D19A4F7B8007760A1 /* UIColor+HexRGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexRGB.h"; sourceTree = "<group>"; };
 		D9E3CC0E19A4F7B8007760A1 /* UIColor+HexRGB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexRGB.m"; sourceTree = "<group>"; };
+		D9EEBB3019A7573700E4788A /* POSCardInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSCardInputViewController.h; sourceTree = "<group>"; };
+		D9EEBB3119A7573700E4788A /* POSCardInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSCardInputViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +185,8 @@
 			children = (
 				D9E3CC0319A3C782007760A1 /* POSWebViewController.h */,
 				D9E3CC0419A3C782007760A1 /* POSWebViewController.m */,
+				D9EEBB3019A7573700E4788A /* POSCardInputViewController.h */,
+				D9EEBB3119A7573700E4788A /* POSCardInputViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -346,6 +351,7 @@
 			files = (
 				D9E3CC0519A3C782007760A1 /* POSWebViewController.m in Sources */,
 				D9E3CBD819A3C6B3007760A1 /* main.m in Sources */,
+				D9EEBB3219A7573700E4788A /* POSCardInputViewController.m in Sources */,
 				D9E3CBDC19A3C6B3007760A1 /* POSAppDelegate.m in Sources */,
 				D9E3CC0F19A4F7B8007760A1 /* UIColor+HexRGB.m in Sources */,
 				D9E3CC0B19A3CB5D007760A1 /* POSConfiguration.m in Sources */,

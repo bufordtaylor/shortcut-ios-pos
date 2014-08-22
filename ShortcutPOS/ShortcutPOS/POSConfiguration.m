@@ -24,7 +24,7 @@
         }
     } else {
 //        return @"http://shortcutapp.dev";
-        return @"http://192.168.1.72:1234";
+        return @"http://10.2.199.38:1234";
     }
 }
 
@@ -47,6 +47,7 @@
     NSDictionary *colorsDict =
         @{
             @"shortcut-purple": @"5f327d",
+            @"slight-gray": @"dddddd",
         };
     
     return [colorsDict objectForKey:colorKeyName];
@@ -58,6 +59,18 @@
 {
     NSString *hexRGBColor = [self colorStringOf:colorKeyName];
     return [UIColor colorWithStringHexRGB:hexRGBColor];
+}
+
+# pragma mark - Fonts
+
++ (NSString *)defaultFont
+{
+    return @"Helvetica";
+}
+
++ (NSString *)defaultFontBold
+{
+    return @"Helvetica Bold";
 }
 
 @end

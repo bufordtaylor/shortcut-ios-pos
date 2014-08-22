@@ -7,12 +7,11 @@
 //
 
 #import "POSWebViewController.h"
-#import "CardIO.h"
+#import "POSCardInputViewController.h"
 
 @interface POSWebViewController ()
     <
         UIWebViewDelegate
-        ,CardIOPaymentViewControllerDelegate
     >
 
 @property UIView *webViewWrapperView;
@@ -100,7 +99,17 @@
     [self.webViewWrapperView addSubview:reloadImageView];
     
     [self loadWebPOS];
+
 }
+
+/*
+// tmp
+- (void)viewDidAppear:(BOOL)animated
+{
+    POSCardInputViewController *cardInputVC = [[POSCardInputViewController alloc] init];
+    [self presentViewController:cardInputVC animated:YES completion:nil];
+}
+*/
 
 #pragma mark - Web view related actions
 
@@ -164,12 +173,16 @@
         NSString *actionType = request.URL.host;
         
         if ([actionType isEqualToString:@"getStripeToken"]) {
-            [[[UIAlertView alloc] initWithTitle:@"UIAlertView from webview!"
-                                        message:@"getStripeToken please!"
-                                       delegate:nil
-                              cancelButtonTitle:@"cancel"
-                              otherButtonTitles:nil, nil]
-             show];
+            
+            POSCardInputViewController *cardInputVC = [[POSCardInputViewController alloc] init];
+            [self presentViewController:cardInputVC animated:YES completion:nil];
+
+//            [[[UIAlertView alloc] initWithTitle:@"UIAlertView from webview!"
+//                                        message:@"getStripeToken please!"
+//                                       delegate:nil
+//                              cancelButtonTitle:@"cancel"
+//                              otherButtonTitles:nil, nil]
+//             show];
         }
         
         return false;
@@ -198,14 +211,6 @@
     if ([self.webView canGoBack]) {
         [self.webView goBack];
     }
-}
-
-- (void)scanCardTapped:(UITapGestureRecognizer *)recognizer
-{
-    CardIOPaymentViewController *scanViewController =
-        [[CardIOPaymentViewController alloc] initWithPaymentDelegate:self];
-    scanViewController.appToken = @"df4cb3fa0320437a9da7de5961888a3d";
-    [self presentViewController:scanViewController animated:YES completion:nil];
 }
 
 #pragma mark - POS status view actions
@@ -289,30 +294,5 @@
     UIView *statusView = [self.view viewWithTag:kStatusViewTag];
     statusView.hidden = true;
 }
-
-#pragma mark - CardIOPaymentViewControllerDelegate
-
-- (void)userDidCancelPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
-    [paymentViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)userDidProvideCreditCardInfo:(CardIOCreditCardInfo *)cardInfo
-             inPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
-    // do something with cardInfo here
-    [paymentViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -13,7 +13,7 @@
 @end
 
 
-typedef NS_ENUM(NSInteger, ViewTags) {
+typedef NS_ENUM(NSInteger, POSWebViewTags) {
     kStatusViewTag = 100,
     kStatusMessageLabelTag,
     kReloadImageViewTag,
