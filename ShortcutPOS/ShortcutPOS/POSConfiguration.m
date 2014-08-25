@@ -24,7 +24,7 @@
         }
     } else {
 //        return @"http://shortcutapp.dev";
-        return @"http://10.2.199.38:1234";
+        return @"http://10.2.198.196:1234";
     }
 }
 
@@ -46,7 +46,7 @@
 {
     NSDictionary *colorsDict =
         @{
-            @"shortcut-purple": @"5f327d",
+            @"shortcut-purple": @"744790",
             @"light-gray": @"dddddd",
             @"dark-gray": @"777777",
         };

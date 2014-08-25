@@ -107,6 +107,11 @@
 // tmp
 - (void)viewDidAppear:(BOOL)animated
 {
+//    [self presentCardInputViewController];
+}
+
+- (void)presentCardInputViewController
+{
     POSCardInputViewController *cardInputVC = [[POSCardInputViewController alloc] init];
     
     UINavigationController *navigationController = [[UINavigationController alloc]
@@ -126,6 +131,7 @@
          action:@selector(doneButtonTapped:)];
     
     [self presentViewController:navigationController animated:YES completion:nil];
+
 }
 //*/
 
@@ -166,6 +172,12 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:cookiesData forKey:@"cookies"];
     [userDefaults synchronize];
+    
+    
+    // Logging the HTML source code
+//    NSString *html = [self.webView
+//                      stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"];
+//    NSLog(@"%@", html);
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -195,8 +207,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         NSString *actionType = request.URL.host;
         
         if ([actionType isEqualToString:@"getStripeToken"]) {
-            POSCardInputViewController *cardInputVC = [[POSCardInputViewController alloc] init];
-            [self presentViewController:cardInputVC animated:YES completion:nil];
+            [self presentCardInputViewController];
         }
         
         return false;
@@ -210,6 +221,10 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 - (void)setStripeTokenId:(NSString *)stripeTokenId
 {
     NSLog(@"stripe token from the webview: %@", stripeTokenId); // do stuff to the webview here
+    
+    NSString *jsString;
+    jsString = [NSString stringWithFormat:@"window.insertStripeToken('%@');", stripeTokenId];
+    [self.webView stringByEvaluatingJavaScriptFromString:jsString];
 }
 
 #pragma mark - UITapGestureRecognizer actions
