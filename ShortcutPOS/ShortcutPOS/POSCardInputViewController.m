@@ -221,12 +221,12 @@
 
 - (void)doneButtonTapped:(UITapGestureRecognizer *)recognizer
 {
-    [self createStripeToken];
+    [self getStripeToken];
 }
 
 #pragma mark - Stripe STPCard actions
 
-- (void)createStripeToken
+- (void)getStripeToken
 {
     // testing with prepopulation
     self.cardNumberTextField.text = @"4242424242424242";
@@ -269,19 +269,12 @@
         if (error) {
             [[[UIAlertView alloc] initWithTitle:@"Payment error"
                                         message:[error localizedDescription]
-                                       delegate:self
+                                       delegate:nil
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:nil] show];
-            return;
         } else {
-            NSLog(@"%@", token.tokenId);
-            [[[UIAlertView alloc] initWithTitle:@"Success"
-                                        message:token.tokenId
-                                       delegate:self
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil] show];
-
-            return;
+            [self.delegate setStripeTokenId:token.tokenId];
+            [self dismissViewControllerAnimated:true completion:nil];
         }
     };
     

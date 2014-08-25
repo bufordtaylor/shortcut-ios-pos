@@ -11,7 +11,8 @@
 
 @interface POSWebViewController ()
     <
-        UIWebViewDelegate
+          UIWebViewDelegate
+        , POSCardInputViewControllerDelegate
     >
 
 @property UIView *webViewWrapperView;
@@ -110,6 +111,7 @@
     
     UINavigationController *navigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:cardInputVC];
+    cardInputVC.delegate = self;
     
     cardInputVC.navigationItem.leftBarButtonItem =
         [[UIBarButtonItem alloc]
@@ -202,6 +204,13 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     }
     
     return true;
+}
+
+#pragma mark POSCardInputViewControllerDelegate
+
+- (void)setStripeTokenId:(NSString *)stripeTokenId
+{
+    NSLog(@"stripe token from the webview: %@", stripeTokenId); // do stuff to the webview here
 }
 
 #pragma mark - UITapGestureRecognizer actions

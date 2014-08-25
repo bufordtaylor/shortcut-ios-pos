@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol POSCardInputViewControllerDelegate <NSObject>
+
+- (void)setStripeTokenId:(NSString *)stripeTokenId;
+
+@end
+
 @interface POSCardInputViewController : UIViewController
+
+@property (weak) id<POSCardInputViewControllerDelegate> delegate;
 
 - (void)cancelButtonTapped:(UITapGestureRecognizer *)recognizer;
 - (void)doneButtonTapped:(UITapGestureRecognizer *)recognizer;
