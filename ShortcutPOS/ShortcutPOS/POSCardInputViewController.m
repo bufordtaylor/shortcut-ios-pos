@@ -10,6 +10,7 @@
 #import "CardIO.h"
 #import "BSKeyboardControls.h"
 #import <Stripe/Stripe.h>
+#import "MBProgressHUD.h"
 
 @interface POSCardInputViewController ()
     <
@@ -113,7 +114,6 @@
                                                 self.cardCvcTextField,
                                                 self.cardExpirationDateTextField]]];
     [self.keyboardControls setDelegate:self];
-
 }
 
 - (void)viewDidLayoutSubviews
@@ -279,7 +279,12 @@
         publishableKey = @"pk_test_CkgL4Osa74NxOHjHyecPci5w";
     }
     
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.dimBackground = true;
+    
     STPCompletionBlock onCompletion = ^(STPToken* token, NSError* error){
+        [hud hide:YES];
+        
         if (error) {
             [[[UIAlertView alloc] initWithTitle:@"Payment error"
                                         message:[error localizedDescription]

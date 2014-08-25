@@ -1,6 +1,7 @@
 PODS:
   - BSKeyboardControls (2.2)
   - CardIO (3.6.3)
+  - MBProgressHUD (0.9)
   - PaymentKit (1.0.5)
   - Stripe (1.1.4):
     - PaymentKit (~> 1.0.4)
@@ -8,11 +9,13 @@ PODS:
 DEPENDENCIES:
   - BSKeyboardControls
   - CardIO (~> 3.6.3)
+  - MBProgressHUD
   - Stripe
 
 SPEC CHECKSUMS:
   BSKeyboardControls: c9aa1bdbb5ecd454aa3d0b2279f79c5dc4b6c6ad
   CardIO: 237e9fd1d69fb4ec4b12ca6fceb0e3ea503c875d
+  MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
   PaymentKit: 14b54835f57ae9e2bf5628140fcd67001740cba2
   Stripe: a0ed1c0675a3c36f6e8d575820cfec1dc9335f53
 
