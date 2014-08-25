@@ -428,6 +428,7 @@
 - (void)keyboardControlsDonePressed:(BSKeyboardControls *)keyboardControls
 {
     [self.view endEditing:YES];
+    [self doneButtonTapped:nil];
 }
 
 - (void)keyboardControls:(BSKeyboardControls *)keyboardControls

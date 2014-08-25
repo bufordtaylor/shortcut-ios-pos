@@ -195,7 +195,6 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         NSString *actionType = request.URL.host;
         
         if ([actionType isEqualToString:@"getStripeToken"]) {
-            
             POSCardInputViewController *cardInputVC = [[POSCardInputViewController alloc] init];
             [self presentViewController:cardInputVC animated:YES completion:nil];
         }
