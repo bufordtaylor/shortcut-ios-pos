@@ -107,7 +107,23 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     POSCardInputViewController *cardInputVC = [[POSCardInputViewController alloc] init];
-    [self presentViewController:cardInputVC animated:YES completion:nil];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc]
+                                                    initWithRootViewController:cardInputVC];
+    
+    cardInputVC.navigationItem.leftBarButtonItem =
+        [[UIBarButtonItem alloc]
+         initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+         target:cardInputVC
+         action:@selector(cancelButtonTapped:)];
+    
+    cardInputVC.navigationItem.rightBarButtonItem =
+        [[UIBarButtonItem alloc]
+         initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+         target:cardInputVC
+         action:@selector(doneButtonTapped:)];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 //*/
 

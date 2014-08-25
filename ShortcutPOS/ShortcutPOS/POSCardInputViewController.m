@@ -98,15 +98,6 @@
                        action:@selector(scanCardTapped:)
              forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:scanCardButton];
-    
-    UIButton *getPaymentTokenButton = [[UIButton alloc] init];
-    getPaymentTokenButton.tag = kGetPaymentTokenButtonTag;
-    [getPaymentTokenButton setTitle:@"CONTINUE" forState:UIControlStateNormal];
-    [getPaymentTokenButton addTarget:self
-                              action:@selector(mainSubmitButtonTapped:)
-                    forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:getPaymentTokenButton];
-
 
     // BSKeyboardControls
     [self setKeyboardControls:[[BSKeyboardControls alloc]
@@ -130,8 +121,7 @@
     UIImageView *cardExpirationDateImageView =
         (UIImageView *)[self.view viewWithTag:kCardExpirationDateImageViewTag];
     UIButton *scanCardButton = (UIButton *)[self.view viewWithTag:kScanCardButtonTag];
-    UIButton *getPaymentTokenButton = (UIButton *)[self.view viewWithTag:kGetPaymentTokenButtonTag];
-    
+
     paddingTop = 50, paddingRight = 30, paddingBottom = 10, paddingLeft = 30;
     cardFieldsMarginTop = 30, cardFieldsOriginX = 90;
     cardFieldsHeight = 30;
@@ -139,6 +129,11 @@
     
     UIFont *fieldsFont = [UIFont fontWithName:[POSConfiguration defaultFont]
                                          size:20];
+    
+    
+    if (self.navigationController) {
+        paddingTop += self.navigationController.navigationBar.frame.size.height - 10;
+    }
     
     titleLabel.font = [UIFont fontWithName:[POSConfiguration defaultFontBold] size:25];
     titleLabel.frame = CGRectMake(paddingLeft, paddingTop, 0, 0);
@@ -202,31 +197,12 @@
                                       titleLabel.frame.origin.y,
                                       scanCardButton.frame.size.width,
                                       scanCardButton.frame.size.height);
-
-    
-    [getPaymentTokenButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    getPaymentTokenButton.titleLabel.font = [UIFont fontWithName:[POSConfiguration defaultFont]
-                                                            size:30];
-    getPaymentTokenButton.backgroundColor = [POSConfiguration colorFor:@"shortcut-purple"];
-    [getPaymentTokenButton sizeToFit];
-    getPaymentTokenButton.frame = CGRectInset(getPaymentTokenButton.frame, 0, -10);
-    getPaymentTokenButton.frame = CGRectMake(0, 0,
-                                             self.view.frame.size.width
-                                             - paddingLeft
-                                             - paddingRight,
-                                             getPaymentTokenButton.frame.size.height);
-    getPaymentTokenButton.frame = CGRectMake(self.view.frame.size.width / 2
-                                                - getPaymentTokenButton.frame.size.width / 2,
-                                             self.view.frame.size.height
-                                                - getPaymentTokenButton.frame.size.height
-                                                - paddingBottom,
-                                             getPaymentTokenButton.frame.size.width,
-                                             getPaymentTokenButton.frame.size.height);
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
 }
+
 
 #pragma mark - UITapGestureRecognizer actions
 
@@ -238,7 +214,12 @@
     [self presentViewController:scanViewController animated:YES completion:nil];
 }
 
-- (void)mainSubmitButtonTapped:(UITapGestureRecognizer *)recognizer
+- (void)cancelButtonTapped:(UITapGestureRecognizer *)recognizer
+{
+    [self dismissViewControllerAnimated:true completion:nil];
+}
+
+- (void)doneButtonTapped:(UITapGestureRecognizer *)recognizer
 {
     [self createStripeToken];
 }
@@ -279,7 +260,7 @@
         publishableKey = @"pk_test_CkgL4Osa74NxOHjHyecPci5w";
     }
     
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.dimBackground = true;
     
     STPCompletionBlock onCompletion = ^(STPToken* token, NSError* error){

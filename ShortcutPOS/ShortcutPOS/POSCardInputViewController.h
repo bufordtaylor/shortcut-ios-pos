@@ -10,6 +10,9 @@
 
 @interface POSCardInputViewController : UIViewController
 
+- (void)cancelButtonTapped:(UITapGestureRecognizer *)recognizer;
+- (void)doneButtonTapped:(UITapGestureRecognizer *)recognizer;
+
 @end
 
 typedef NS_ENUM(NSInteger, POSCardInputTags) {
@@ -23,5 +26,4 @@ typedef NS_ENUM(NSInteger, POSCardInputTags) {
     kCardExpirationDatePickerViewTag,
     kCardExpirationDateTextFieldInputViewTag,
     kScanCardButtonTag,
-    kGetPaymentTokenButtonTag,
 };
