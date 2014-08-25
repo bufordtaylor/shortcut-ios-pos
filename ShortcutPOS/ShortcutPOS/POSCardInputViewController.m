@@ -444,4 +444,20 @@
 {
 }
 
+#pragma mark - Enumerators
+#pragma mark View Tags
+
+typedef NS_ENUM(NSInteger, POSCardInputTags) {
+    kTitleLabelTag = 100,
+    kCardImageViewTag,
+    kCardCvcImageViewTag,
+    kCardExpirationDateImageViewTag,
+    kCardNumberTextFieldTag,
+    kCardCvcTextFieldTag,
+    kCardExpirationDateTextFieldTag,
+    kCardExpirationDatePickerViewTag,
+    kCardExpirationDateTextFieldInputViewTag,
+    kScanCardButtonTag,
+};
+
 @end

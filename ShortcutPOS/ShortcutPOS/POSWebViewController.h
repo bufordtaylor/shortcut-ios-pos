@@ -11,11 +11,3 @@
 @interface POSWebViewController : UIViewController
 
 @end
-
-
-typedef NS_ENUM(NSInteger, POSWebViewTags) {
-    kStatusViewTag = 100,
-    kStatusMessageLabelTag,
-    kReloadImageViewTag,
-    kReloadAfterErrorButtonTag
-};

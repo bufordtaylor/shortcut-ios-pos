@@ -14,16 +14,3 @@
 - (void)doneButtonTapped:(UITapGestureRecognizer *)recognizer;
 
 @end
-
-typedef NS_ENUM(NSInteger, POSCardInputTags) {
-    kTitleLabelTag = 100,
-    kCardImageViewTag,
-    kCardCvcImageViewTag,
-    kCardExpirationDateImageViewTag,
-    kCardNumberTextFieldTag,
-    kCardCvcTextFieldTag,
-    kCardExpirationDateTextFieldTag,
-    kCardExpirationDatePickerViewTag,
-    kCardExpirationDateTextFieldInputViewTag,
-    kScanCardButtonTag,
-};

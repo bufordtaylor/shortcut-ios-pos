@@ -308,4 +308,15 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     statusView.hidden = true;
 }
 
+
+#pragma mark - Enumerators
+#pragma mark View Tags
+
+typedef NS_ENUM(NSInteger, POSWebViewTags) {
+    kStatusViewTag = 100,
+    kStatusMessageLabelTag,
+    kReloadImageViewTag,
+    kReloadAfterErrorButtonTag
+};
+
 @end
