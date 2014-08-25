@@ -71,12 +71,6 @@
     self.cardNumberTextField.delegate = self;
     [self.view addSubview:self.cardNumberTextField];
     
-    self.cardCvcTextField = [[UITextField alloc] init];
-    self.cardCvcTextField.keyboardType = UIKeyboardTypeNumberPad;
-    self.cardCvcTextField.placeholder = @"CVC Number";
-    self.cardCvcTextField.delegate = self;
-    [self.view addSubview:self.cardCvcTextField];
-    
     self.cardExpirationDateTextField = [[UITextField alloc] init];
     self.cardExpirationDateTextField.tag = kCardExpirationDateTextFieldTag;
     self.cardExpirationDateTextField.placeholder = @"Expiration Date";
@@ -91,6 +85,12 @@
     self.cardExpirationDatePickerView.showsSelectionIndicator = YES;
     self.cardExpirationDateTextField.inputView = self.cardExpirationDatePickerView;
     
+    self.cardCvcTextField = [[UITextField alloc] init];
+    self.cardCvcTextField.keyboardType = UIKeyboardTypeNumberPad;
+    self.cardCvcTextField.placeholder = @"CVC Number";
+    self.cardCvcTextField.delegate = self;
+    [self.view addSubview:self.cardCvcTextField];
+    
     UIButton *scanCardButton = [[UIButton alloc] init];
     scanCardButton.tag = kScanCardButtonTag;
     [scanCardButton setTitle:@"SCAN CARD" forState:UIControlStateNormal];
@@ -102,8 +102,8 @@
     // BSKeyboardControls
     [self setKeyboardControls:[[BSKeyboardControls alloc]
                                initWithFields:@[self.cardNumberTextField,
-                                                self.cardCvcTextField,
-                                                self.cardExpirationDateTextField]]];
+                                                self.cardExpirationDateTextField,
+                                                self.cardCvcTextField]]];
     [self.keyboardControls setDelegate:self];
 }
 
@@ -147,34 +147,26 @@
                    cardImageView.frame.size.width,
                    cardImageView.frame.size.height);
     
-    cardCvcImageView.frame =
+    cardExpirationDateImageView.frame =
         CGRectMake(paddingLeft,
                    cardImageView.frame.origin.y
                         + cardImageView.frame.size.height
                         + cardFieldsMarginTop,
-                   cardCvcImageView.frame.size.width,
-                   cardCvcImageView.frame.size.height);
-    
-    cardExpirationDateImageView.frame =
-        CGRectMake(paddingLeft,
-                   cardCvcImageView.frame.origin.y
-                        + cardCvcImageView.frame.size.height
-                        + cardFieldsMarginTop,
                    cardExpirationDateImageView.frame.size.width,
                    cardExpirationDateImageView.frame.size.height);
-    
-    
+
+    cardCvcImageView.frame =
+        CGRectMake(paddingLeft,
+                   cardExpirationDateImageView.frame.origin.y
+                       + cardExpirationDateImageView.frame.size.height
+                       + cardFieldsMarginTop,
+                   cardCvcImageView.frame.size.width,
+                   cardCvcImageView.frame.size.height);
+
     self.cardNumberTextField.font = fieldsFont;
     self.cardNumberTextField.frame =
         CGRectMake(cardFieldsOriginX,
                    cardImageView.frame.origin.y,
-                   cardFieldsWidth,
-                   cardFieldsHeight);
-    
-    self.cardCvcTextField.font = fieldsFont;
-    self.cardCvcTextField.frame =
-        CGRectMake(cardFieldsOriginX,
-                   cardCvcImageView.frame.origin.y,
                    cardFieldsWidth,
                    cardFieldsHeight);
     
@@ -185,6 +177,13 @@
                    cardFieldsWidth,
                    cardFieldsHeight);
     
+    self.cardCvcTextField.font = fieldsFont;
+    self.cardCvcTextField.frame =
+        CGRectMake(cardFieldsOriginX,
+                   cardCvcImageView.frame.origin.y,
+                   cardFieldsWidth,
+                   cardFieldsHeight);
+
     [scanCardButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     scanCardButton.titleLabel.font = [UIFont fontWithName:[POSConfiguration defaultFont]
                                                      size:14];
