@@ -47,7 +47,8 @@
     NSDictionary *colorsDict =
         @{
             @"shortcut-purple": @"5f327d",
-            @"slight-gray": @"dddddd",
+            @"light-gray": @"dddddd",
+            @"dark-gray": @"777777",
         };
     
     return [colorsDict objectForKey:colorKeyName];

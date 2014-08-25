@@ -164,10 +164,13 @@
                withError:true];
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+- (BOOL)webView:(UIWebView *)webView
+shouldStartLoadWithRequest:(NSURLRequest *)request
+ navigationType:(UIWebViewNavigationType)navigationType
 {
     NSString *appScheme = @"shortcutpos";
-    NSString *jsonDictString = [request.URL.fragment stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    NSString *jsonDictString = [request.URL.fragment
+                                stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
     #pragma unused (jsonDictString)
     
     if ([request.URL.scheme isEqualToString:appScheme]) {

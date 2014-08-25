@@ -55,7 +55,7 @@
 + (int)hexInt:(NSString *)hex
 {
     unsigned result = 0;
-    NSScanner *scanner = [NSScanner scannerWithString:hex];
+    NSScanner *scanner = [NSScanner scannerWithString:[hex copy]];
     [scanner scanHexInt:&result];
     return result;
 }

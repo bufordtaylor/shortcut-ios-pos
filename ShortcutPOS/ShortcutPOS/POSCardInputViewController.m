@@ -9,6 +9,7 @@
 #import "POSCardInputViewController.h"
 #import "CardIO.h"
 #import "BSKeyboardControls.h"
+#import <Stripe/Stripe.h>
 
 @interface POSCardInputViewController ()
     <
@@ -29,6 +30,7 @@
 @property NSNumber *selectedCardExpirationYear;
 
 @property BSKeyboardControls *keyboardControls;
+@property STPCard *stripeCard;
 
 @end
 
@@ -38,7 +40,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [POSConfiguration colorFor:@"slight-gray"];
+    self.view.backgroundColor = [POSConfiguration colorFor:@"light-gray"];
     
     // Title Label
     UILabel *titleLabel = [[UILabel alloc] init];
@@ -92,9 +94,18 @@
     scanCardButton.tag = kScanCardButtonTag;
     [scanCardButton setTitle:@"SCAN CARD" forState:UIControlStateNormal];
     [scanCardButton addTarget:self
-                               action:@selector(scanCardTapped:)
-                     forControlEvents:UIControlEventTouchUpInside];
+                       action:@selector(scanCardTapped:)
+             forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:scanCardButton];
+    
+    UIButton *getPaymentTokenButton = [[UIButton alloc] init];
+    getPaymentTokenButton.tag = kGetPaymentTokenButtonTag;
+    [getPaymentTokenButton setTitle:@"CONTINUE" forState:UIControlStateNormal];
+    [getPaymentTokenButton addTarget:self
+                              action:@selector(mainSubmitButtonTapped:)
+                    forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:getPaymentTokenButton];
+
 
     // BSKeyboardControls
     [self setKeyboardControls:[[BSKeyboardControls alloc]
@@ -116,8 +127,10 @@
     UILabel *titleLabel = (UILabel *)[self.view viewWithTag:kTitleLabelTag];
     UIImageView *cardImageView = (UIImageView *)[self.view viewWithTag:kCardImageViewTag];
     UIImageView *cardCvcImageView = (UIImageView *)[self.view viewWithTag:kCardCvcImageViewTag];
-    UIImageView *cardExpirationDateImageView = (UIImageView *)[self.view viewWithTag:kCardExpirationDateImageViewTag];
+    UIImageView *cardExpirationDateImageView =
+        (UIImageView *)[self.view viewWithTag:kCardExpirationDateImageViewTag];
     UIButton *scanCardButton = (UIButton *)[self.view viewWithTag:kScanCardButtonTag];
+    UIButton *getPaymentTokenButton = (UIButton *)[self.view viewWithTag:kGetPaymentTokenButtonTag];
     
     paddingTop = 50, paddingRight = 30, paddingBottom = 10, paddingLeft = 30;
     cardFieldsMarginTop = 30, cardFieldsOriginX = 90;
@@ -180,7 +193,7 @@
     [scanCardButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     scanCardButton.titleLabel.font = [UIFont fontWithName:[POSConfiguration defaultFont]
                                                      size:14];
-    scanCardButton.backgroundColor = [POSConfiguration colorFor:@"shortcut-purple"];
+    scanCardButton.backgroundColor = [POSConfiguration colorFor:@"dark-gray"];
     [scanCardButton sizeToFit];
     scanCardButton.frame = CGRectInset(scanCardButton.frame, -10, 0);
     scanCardButton.frame = CGRectMake(self.view.frame.size.width
@@ -190,22 +203,107 @@
                                       scanCardButton.frame.size.width,
                                       scanCardButton.frame.size.height);
 
+    
+    [getPaymentTokenButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    getPaymentTokenButton.titleLabel.font = [UIFont fontWithName:[POSConfiguration defaultFont]
+                                                            size:30];
+    getPaymentTokenButton.backgroundColor = [POSConfiguration colorFor:@"shortcut-purple"];
+    [getPaymentTokenButton sizeToFit];
+    getPaymentTokenButton.frame = CGRectInset(getPaymentTokenButton.frame, 0, -10);
+    getPaymentTokenButton.frame = CGRectMake(0, 0,
+                                             self.view.frame.size.width
+                                             - paddingLeft
+                                             - paddingRight,
+                                             getPaymentTokenButton.frame.size.height);
+    getPaymentTokenButton.frame = CGRectMake(self.view.frame.size.width / 2
+                                                - getPaymentTokenButton.frame.size.width / 2,
+                                             self.view.frame.size.height
+                                                - getPaymentTokenButton.frame.size.height
+                                                - paddingBottom,
+                                             getPaymentTokenButton.frame.size.width,
+                                             getPaymentTokenButton.frame.size.height);
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    
 }
 
 #pragma mark - UITapGestureRecognizer actions
 
 - (void)scanCardTapped:(UITapGestureRecognizer *)recognizer
 {
-    CardIOPaymentViewController *scanViewController =
-        [[CardIOPaymentViewController alloc] initWithPaymentDelegate:self];
+    CardIOPaymentViewController *scanViewController = [[CardIOPaymentViewController alloc]
+                                                       initWithPaymentDelegate:self];
     scanViewController.appToken = @"df4cb3fa0320437a9da7de5961888a3d";
     [self presentViewController:scanViewController animated:YES completion:nil];
 }
+
+- (void)mainSubmitButtonTapped:(UITapGestureRecognizer *)recognizer
+{
+    [self createStripeToken];
+}
+
+#pragma mark - Stripe STPCard actions
+
+- (void)createStripeToken
+{
+    // testing with prepopulation
+    self.cardNumberTextField.text = @"4242424242424242";
+    self.cardCvcTextField.text = @"123";
+    self.selectedCardExpirationMonth = @(1);
+    self.selectedCardExpirationYear = @(2015);
+
+    self.stripeCard = [[STPCard alloc] init];
+    self.stripeCard.name = @"Card user from POS"; // TODO replace this with something more relevant
+    self.stripeCard.number = self.cardNumberTextField.text;
+    self.stripeCard.cvc = self.cardCvcTextField.text;
+    self.stripeCard.expMonth = [self.selectedCardExpirationMonth integerValue];
+    self.stripeCard.expYear = [self.selectedCardExpirationYear integerValue];
+    
+    NSError* error = nil;
+    [self.stripeCard validateCardReturningError:&error];
+    
+    if (error) {
+        [[[UIAlertView alloc] initWithTitle:@"Please try again"
+                                    message:[error localizedDescription]
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+        return;
+    }
+    
+    NSString *publishableKey;
+    if ([POSConfiguration production]) {
+        publishableKey = @"pk_live_oOWFnFFflBWlKcG54DOJrtJf";
+    } else {
+        publishableKey = @"pk_test_CkgL4Osa74NxOHjHyecPci5w";
+    }
+    
+    STPCompletionBlock onCompletion = ^(STPToken* token, NSError* error){
+        if (error) {
+            [[[UIAlertView alloc] initWithTitle:@"Payment error"
+                                        message:[error localizedDescription]
+                                       delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil] show];
+            return;
+        } else {
+            NSLog(@"%@", token.tokenId);
+            [[[UIAlertView alloc] initWithTitle:@"Success"
+                                        message:token.tokenId
+                                       delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil] show];
+
+            return;
+        }
+    };
+    
+    [Stripe createTokenWithCard:self.stripeCard
+                 publishableKey:publishableKey
+                     completion:onCompletion];
+}
+
 
 #pragma mark - CardIO
 #pragma mark CardIOPaymentViewControllerDelegate
@@ -223,8 +321,8 @@
     self.selectedCardExpirationMonth = @(cardInfo.expiryMonth);
     self.selectedCardExpirationYear = @(cardInfo.expiryYear);
     self.cardExpirationDateTextField.text = [NSString stringWithFormat:@"%@/%@",
-                                                 @(cardInfo.expiryMonth),
-                                                 @(cardInfo.expiryYear)];
+                                             @(cardInfo.expiryMonth),
+                                             @(cardInfo.expiryYear)];
 
     [paymentViewController dismissViewControllerAnimated:YES completion:nil];
 }
@@ -358,7 +456,6 @@
            selectedField:(UIView *)field
              inDirection:(BSKeyboardControlsDirection)direction
 {
-    NSLog(@"xxxaaaaa");
 }
 
 @end
