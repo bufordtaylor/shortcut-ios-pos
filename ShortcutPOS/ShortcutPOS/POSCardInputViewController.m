@@ -44,7 +44,7 @@
     self.view.backgroundColor = [POSConfiguration colorFor:@"light-gray"];
     
     // Title Label
-    UILabel *titleLabel = [[UILabel alloc] init];
+    UILabel *titleLabel = [UILabel new];
     titleLabel.tag = kTitleLabelTag;
     titleLabel.text = @"Card Info";
     [self.view addSubview:titleLabel];
@@ -65,33 +65,33 @@
     [self.view addSubview:imageView];
     
     // Text fields and buttons
-    self.cardNumberTextField = [[UITextField alloc] init];
+    self.cardNumberTextField = [UITextField new];
     self.cardNumberTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.cardNumberTextField.placeholder = @"Card Number";
     self.cardNumberTextField.delegate = self;
     [self.view addSubview:self.cardNumberTextField];
     
-    self.cardExpirationDateTextField = [[UITextField alloc] init];
+    self.cardExpirationDateTextField = [UITextField new];
     self.cardExpirationDateTextField.tag = kCardExpirationDateTextFieldTag;
     self.cardExpirationDateTextField.placeholder = @"Expiration Date";
     self.cardExpirationDateTextField.returnKeyType = UIReturnKeyDone;
     self.cardExpirationDateTextField.delegate = self;
     [self.view addSubview:self.cardExpirationDateTextField];
 
-    self.cardExpirationDatePickerView = [[UIPickerView alloc] init];
+    self.cardExpirationDatePickerView = [UIPickerView new];
     self.cardExpirationDatePickerView.tag = kCardExpirationDatePickerViewTag;
     self.cardExpirationDatePickerView.delegate = self;
     self.cardExpirationDatePickerView.dataSource = self;
     self.cardExpirationDatePickerView.showsSelectionIndicator = YES;
     self.cardExpirationDateTextField.inputView = self.cardExpirationDatePickerView;
     
-    self.cardCvcTextField = [[UITextField alloc] init];
+    self.cardCvcTextField = [UITextField new];
     self.cardCvcTextField.keyboardType = UIKeyboardTypeNumberPad;
     self.cardCvcTextField.placeholder = @"CVC Number";
     self.cardCvcTextField.delegate = self;
     [self.view addSubview:self.cardCvcTextField];
     
-    UIButton *scanCardButton = [[UIButton alloc] init];
+    UIButton *scanCardButton = [UIButton new];
     scanCardButton.tag = kScanCardButtonTag;
     [scanCardButton setTitle:@"SCAN CARD" forState:UIControlStateNormal];
     [scanCardButton addTarget:self
@@ -228,13 +228,13 @@
 - (void)getStripeToken
 {
     // testing with prepopulation
-    self.cardNumberTextField.text = @"4242424242424242";
-    self.cardCvcTextField.text = @"123";
-    self.selectedCardExpirationMonth = @(1);
-    self.selectedCardExpirationYear = @(2015);
+//    self.cardNumberTextField.text = @"4242424242424242";
+//    self.cardCvcTextField.text = @"123";
+//    self.selectedCardExpirationMonth = @(1);
+//    self.selectedCardExpirationYear = @(2015);
 
-    self.stripeCard = [[STPCard alloc] init];
-    self.stripeCard.name = @"Card user from POS"; // TODO replace this with something more relevant
+    self.stripeCard = [STPCard new];
+    self.stripeCard.name = @"Card user from POS";
     self.stripeCard.number = self.cardNumberTextField.text;
     self.stripeCard.cvc = self.cardCvcTextField.text;
     self.stripeCard.expMonth = [self.selectedCardExpirationMonth integerValue];
@@ -350,7 +350,7 @@
                                            @"10 - October", @"11 - November", @"12 - December"];
             return monthsTitlesArray[row];
         } else {
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            NSDateFormatter *dateFormatter = [NSDateFormatter new];
             [dateFormatter setDateFormat:@"yyyy"];
             NSInteger currentYear = [[dateFormatter stringFromDate:[NSDate date]] integerValue];
             return [NSString stringWithFormat:@"%li", (long)(currentYear + row)];

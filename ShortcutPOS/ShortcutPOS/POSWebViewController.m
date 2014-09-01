@@ -30,22 +30,9 @@
     self.view.backgroundColor = [POSConfiguration colorFor:@"shortcut-purple"];
     
     // Wrapper around the WebView
-    self.webViewWrapperView = [[UIView alloc] init];
+    self.webViewWrapperView = [UIView new];
     self.webViewWrapperView.hidden = true;
-    self.webViewWrapperView.frame = CGRectMake(0, 0,
-                                               self.view.frame.size.width,
-                                               self.view.frame.size.height);
     [self.view addSubview:self.webViewWrapperView];
-    
-    if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
-        self.webViewWrapperView.frame = CGRectMake(0, 0,
-                                        self.view.frame.size.width,
-                                        self.view.frame.size.height);
-    } else {
-        self.webViewWrapperView.frame = CGRectMake(0, 0,
-                                        self.view.frame.size.height,
-                                        self.view.frame.size.width);
-    }
     
     // Settings cookies
     NSData *keyedCookies = [[NSUserDefaults standardUserDefaults] objectForKey:@"cookies"];
@@ -69,10 +56,10 @@
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
     
     // Webview
-    self.webView = [[UIWebView alloc] init];
+    self.webView = [UIWebView new];
     self.webView.delegate = self;
-    self.webView.frame = self.webViewWrapperView.frame;
     self.webView.hidden = true;
+    self.webView.scrollView.bounces = false;
     [self.webViewWrapperView addSubview:self.webView];
     
     // Handle swiping right (=> from left to right) to go to previous page
@@ -83,7 +70,6 @@
     [self.webView addGestureRecognizer:swipeRightGesture];
     
     // Reload button
-    float width, height;
     UIImage *reloadImage = [UIImage imageNamed:@"reload"];
     UIImageView *reloadImageView = [[UIImageView alloc] initWithImage:reloadImage];
     reloadImageView.tag = kReloadImageViewTag;
@@ -92,32 +78,25 @@
      addGestureRecognizer:[[UITapGestureRecognizer alloc]
                            initWithTarget:self
                            action:@selector(reloadTapped:)]];
-    // reload button align at the bottom left
-    width = 30; height = 30;
-    reloadImageView.frame = CGRectMake(0,
-                                       self.webViewWrapperView.frame.size.height - height,
-                                       width, height);
     [self.webViewWrapperView addSubview:reloadImageView];
     
     [self loadWebPOS];
 
 }
 
-///*
-// tmp
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-//    [self presentCardInputViewController];
+    [self sizeAndPositionElements:self.interfaceOrientation];
 }
 
 - (void)presentCardInputViewController
 {
-    POSCardInputViewController *cardInputVC = [[POSCardInputViewController alloc] init];
+    POSCardInputViewController *cardInputVC = [POSCardInputViewController new];
     
     UINavigationController *navigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:cardInputVC];
     cardInputVC.delegate = self;
-    
+
     cardInputVC.navigationItem.leftBarButtonItem =
         [[UIBarButtonItem alloc]
          initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
@@ -133,7 +112,54 @@
     [self presentViewController:navigationController animated:YES completion:nil];
 
 }
-//*/
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration
+{
+    [self sizeAndPositionElements:toInterfaceOrientation];
+}
+
+- (void)sizeAndPositionElements:(UIInterfaceOrientation)forInterfaceOrientation
+{
+    // Note:
+    // If you open the POSCardInputViewController, then rotate the device, then close it,
+    // the size of the view won't be correct "for some reason".
+    
+    float baseWidth = self.view.frame.size.width;
+    float baseHeight = self.view.frame.size.height;
+    
+    if (UIInterfaceOrientationIsLandscape(forInterfaceOrientation)) {
+        baseWidth = self.view.frame.size.height;
+        baseHeight = self.view.frame.size.width;
+    }
+    
+    self.webViewWrapperView.frame = CGRectMake(0, 0, baseWidth, baseHeight);
+    self.webView.frame = self.webViewWrapperView.frame;
+    
+    UIImageView *reloadImageView = (UIImageView *)[self.view viewWithTag:kReloadImageViewTag];
+    reloadImageView.frame = CGRectMake(0, baseHeight - 30, 30, 30);
+    
+    UIView *statusView = (UIView *)[self.view viewWithTag:kStatusViewTag];
+    statusView.frame = self.webViewWrapperView.frame;
+
+    UILabel *messageLabel = (UILabel *)[self.view viewWithTag:kStatusMessageLabelTag];
+    CGSize messageLabelSize = [messageLabel
+                               sizeThatFits:CGSizeMake(statusView.frame.size.width * 0.95,
+                                                       MAXFLOAT)];
+    messageLabel.frame = CGRectMake(0, 0, messageLabelSize.width, messageLabelSize.height);
+    messageLabel.center = statusView.center;
+
+    UIButton *reloadAfterErrorButton = (UIButton *)[self.view
+                                                    viewWithTag:kReloadAfterErrorButtonTag];
+    reloadAfterErrorButton.center = statusView.center;
+    
+    CGRect buttonFrame = reloadAfterErrorButton.frame;
+    buttonFrame.origin.y = messageLabel.frame.origin.y + messageLabel.frame.size.height + 50;
+    reloadAfterErrorButton.frame = buttonFrame;
+
+}
+
+
 
 #pragma mark - UIWebView
 #pragma mark UIWebView actions
@@ -206,7 +232,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     if ([request.URL.scheme isEqualToString:appScheme]) {
         NSString *actionType = request.URL.host;
         
-        if ([actionType isEqualToString:@"getStripeToken"]) {
+        if ([actionType isEqualToString:@"payWithCard"]) {
             [self presentCardInputViewController];
         }
         
@@ -266,14 +292,13 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     
     if (statusView == nil) {
         // building status view
-        statusView = [[UIView alloc] init];
+        statusView = [UIView new];
         statusView.tag = kStatusViewTag;
         statusView.hidden = true;
-        statusView.frame = self.webViewWrapperView.frame;
         [self.view addSubview:statusView];
         
         // building message label
-        messageLabel = [[UILabel alloc] init];
+        messageLabel = [UILabel new];
         messageLabel.tag = kStatusMessageLabelTag;
         messageLabel.numberOfLines = 0;
         messageLabel.textAlignment = NSTextAlignmentCenter;
@@ -282,7 +307,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         [statusView addSubview:messageLabel];
         
         // building reload button
-        reloadAfterErrorButton = [[UIButton alloc] init];
+        reloadAfterErrorButton = [UIButton new];
         reloadAfterErrorButton.tag = kReloadAfterErrorButtonTag;
         [reloadAfterErrorButton setTitleColor:[UIColor redColor]
                                      forState:UIControlStateNormal];
@@ -293,7 +318,6 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         reloadAfterErrorButton.backgroundColor = [UIColor whiteColor];
         [reloadAfterErrorButton sizeToFit];
         reloadAfterErrorButton.frame = CGRectInset(reloadAfterErrorButton.frame, -20, -10);
-        reloadAfterErrorButton.center = statusView.center;
         [statusView addSubview:reloadAfterErrorButton];
     }
     
@@ -302,11 +326,6 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     // customizing message label
     messageLabel = (UILabel *)[statusView viewWithTag:kStatusMessageLabelTag];
     messageLabel.text = message;
-    CGSize messageLabelSize = [messageLabel
-                               sizeThatFits:CGSizeMake(statusView.frame.size.width * 0.95,
-                                                       MAXFLOAT)];
-    messageLabel.frame = CGRectMake(0, 0, messageLabelSize.width, messageLabelSize.height);
-    messageLabel.center = statusView.center;
     
     // customizing reload button
     reloadAfterErrorButton = (UIButton *)[statusView viewWithTag:kReloadAfterErrorButtonTag];
@@ -314,13 +333,12 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     if (withError) {
         statusView.backgroundColor = [UIColor redColor];
         reloadAfterErrorButton.hidden = false;
-        CGRect buttonFrame = reloadAfterErrorButton.frame;
-        buttonFrame.origin.y = messageLabel.frame.origin.y + messageLabel.frame.size.height + 50;
-        reloadAfterErrorButton.frame = buttonFrame;
     } else {
         statusView.backgroundColor = [POSConfiguration colorFor:@"shortcut-purple"];
         reloadAfterErrorButton.hidden = true;
     }
+    
+    [self sizeAndPositionElements:self.interfaceOrientation];
 }
 
 - (void)hideStatusView
